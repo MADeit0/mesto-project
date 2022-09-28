@@ -1,0 +1,25 @@
+.profile__text-info {
+  max-width: 255px;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-template-areas:
+    'title edit'
+    'subtitle .';
+  gap: 7px 10px;
+  box-sizing: border-box;
+  padding: 26px 0 32px 30px;
+}
+
+@media screen and (min-width: 657px) {
+  .profile__text-info {
+    gap: 7px 18px;
+    margin-right: auto;
+    padding: 0 0 0 30px;
+  }
+}
+
+@media screen and (min-width: 994px) {
+  .profile__text-info {
+    max-width: 365px;
+  }
+}

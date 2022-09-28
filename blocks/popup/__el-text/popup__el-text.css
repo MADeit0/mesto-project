@@ -1,0 +1,14 @@
+.popup__el-text {
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  border: 0;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  padding: 0 0 8px 0;
+}
+
+.popup__el-text::placeholder {
+  color: black;
+}

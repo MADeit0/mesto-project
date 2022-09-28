@@ -1,0 +1,26 @@
+.popup__btn-leave {
+  background: no-repeat center url(../../../images/icons/Close_Icon.svg);
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -36px;
+  right: 0;
+  border: 0;
+  padding: 0;
+  transition: opacity .2s ease-in-out;
+  cursor: pointer;
+}
+
+.popup__btn-leave:hover {
+  opacity: .6;
+}
+
+@media screen and (min-width: 657px) {
+  .popup__btn-leave {
+    width: 32px;
+    height: 32px;
+    top: -40px;
+    right: -40px;
+  }
+}
