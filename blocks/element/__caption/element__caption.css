@@ -1,5 +1,5 @@
 .element__caption {
-  height: 79px;
+  min-height: 79px;
   background-color: white;
   display: flex;
   justify-content: space-between;

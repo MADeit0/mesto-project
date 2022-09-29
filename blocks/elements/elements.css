@@ -1,4 +1,12 @@
 .elements {
-  display: flex;
-  justify-content: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  justify-items: center;
+  list-style-type: none;
+  row-gap: 20px;
+  column-gap: 17px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
