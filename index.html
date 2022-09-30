@@ -73,15 +73,17 @@
     </footer>
 
     <div class="popup">
-      <form class="popup__container" action="#" method="post" name="profile_data">
-        <h3 class="popup__title">Редактировать профиль</h3>
-        <fieldset class="popup__contact-info">
-          <input class="popup__el-text" type="text" name="Name" placeholder="Жак-Ив Кусто" title="Имя">
-          <input class="popup__el-text" type="text" name="activity" placeholder="Исcледователь океана" title="Род деятельности">
-        </fieldset>
-        <button class="popup__btn-accept" type="submit" title="Сохранить изменения" aria-label="Сохранить изменения">Сохранить</button>
+      <div class="popup__container">
         <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
-      </form>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="popup__form" action="#" method="post" name="profile_data">
+          <fieldset class="popup__contact-info">
+            <input class="popup__el-text" type="text" name="Name" placeholder="Жак-Ив Кусто" title="Имя">
+            <input class="popup__el-text" type="text" name="activity" placeholder="Исcледователь океана" title="Род деятельности">
+          </fieldset>
+          <button class="popup__btn-accept" type="submit" title="Сохранить изменения" aria-label="Сохранить изменения">Сохранить</button>
+        </form>
+      </div>
     </div>
   </div>
 </body>
