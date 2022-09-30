@@ -1,5 +1,6 @@
 .popup__el-text {
   width: 100%;
+  font-family: inherit;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
