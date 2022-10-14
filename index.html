@@ -72,7 +72,7 @@
       <p class="footer__copyright">&copy; 2022. Цыпуштанов Олег</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_edit-profile">
       <div class="popup__container">
         <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
@@ -85,7 +85,21 @@
         </form>
       </div>
     </div>
+    <div class="popup popup_add-cards">
+      <div class="popup__container">
+        <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
+        <h3 class="popup__title">Новое место</h3>
+        <form class="popup__form" action="#" method="post" name="add_img_data">
+          <fieldset class="popup__contact-info">
+            <input class="popup__el-text" type="text" name="name_img" placeholder="Название" title="Название картинки">
+            <input class="popup__el-text" type="text" name="url_img" placeholder="Ссылка на картинку" title="Ссылка на картинку">
+          </fieldset>
+          <button class="popup__btn-accept" type="submit" title="Создать карточку" aria-label="Создать карточку">Создать</button>
+        </form>
+      </div>
+    </div>
   </div>
+  <script src="./js/index.js"></script>
 </body>
 
 </html>
