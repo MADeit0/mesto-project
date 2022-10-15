@@ -15,7 +15,7 @@ profileBtnEdit.addEventListener('click', () => opensPopup(popupEditProfile));
 profileBtnAddCards.addEventListener('click', () => opensPopup(popupAddCards));
 
 popupBtnLeave.forEach((item) => {
-  item.addEventListener('click', function (evt) {
+  item.addEventListener('click', function () {
     const listItem = item.closest('.popup');
 
     listItem.classList.add('popup_closed');
