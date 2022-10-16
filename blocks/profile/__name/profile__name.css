@@ -12,6 +12,12 @@
   margin: 0;
 }
 
+@media screen and (min-width: 657px) {
+  .profile__name {
+    text-align: start;
+  }
+}
+
 @media screen and (min-width: 994px) {
   .profile__name {
     font-size: 42px;
