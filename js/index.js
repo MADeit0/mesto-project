@@ -59,9 +59,15 @@ function formSubmitHandlerProfile(evt) {
 }
 
 formProfile.addEventListener('submit', formSubmitHandlerProfile);
+// лайк через делегирование
+const elementsCards = document.querySelector('.elements');
 
+function addsLikeCads(event) {
+  const likeCard = event.target.closest('.element__btn-like');
 
+  if (likeCard) {
+    likeCard.classList.toggle('element__btn-like_active');
+  }
+}
 
-
-
-
+elementsCards.addEventListener('click', addsLikeCads);
