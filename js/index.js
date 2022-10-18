@@ -71,3 +71,53 @@ function addsLikeCads(event) {
 }
 
 elementsCards.addEventListener('click', addsLikeCads);
+// добавление списка ссылок в карточки
+// массив url картинок
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+// ивент при загрузки страницы
+document.addEventListener("DOMContentLoaded", downloadСards);
+
+function downloadСards() {
+  for (let i = 0; i < initialCards.length; i++) {
+    const name = initialCards[i].name;
+    const link = initialCards[i].link;
+
+    addsElementCard(name, link);
+  }
+}
+
+function addsElementCard(nameCard, linkCard) {
+  const cardTemplate = document.querySelector('#tmp-card').content;
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+
+  cardElement.querySelector('.element__title').textContent = nameCard
+  cardElement.querySelector('.element__image').src = linkCard
+  cardElement.querySelector('.element__image').alt = nameCard
+
+  elementsCards.prepend(cardElement);
+}
