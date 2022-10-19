@@ -15,7 +15,8 @@ const profileActivity = document.querySelector('.profile__activity');
 const nameInput = formProfile.querySelector('input[name = firstname]');
 const jobInput = formProfile.querySelector('input[name = activity]');
 
-
+const nameImgInput = formCard.querySelector('input[name = name_img]');
+const linkInput = formCard.querySelector('input[name = url_img]');
 
 function opensPopup(classItem) {
   selector = classItem.classList;
@@ -40,7 +41,11 @@ profileBtnEdit.addEventListener('click', () => {
   getDefValueInp(profileActivity, jobInput);
 });
 
-profileBtnAddCards.addEventListener('click', () => opensPopup(popupAddCards));
+profileBtnAddCards.addEventListener('click', () => {
+  nameImgInput.value = '';
+  linkInput.value = '';
+  opensPopup(popupAddCards);
+});
 
 popupBtnLeave.forEach((item) => {
   item.addEventListener('click', () => closesPopup(item));
@@ -52,72 +57,106 @@ function formSubmitHandlerProfile(evt) {
   const valueName = nameInput.value;
   const valueJob = jobInput.value;
 
-  profileName.textContent = valueName || 'Жак-Ив Кусто';
-  profileActivity.textContent = valueJob || 'Исследователь океана';
-
-  closesPopup(formProfile);
+  checkingStringsProfile(valueName, valueJob)
 }
 
-formProfile.addEventListener('submit', formSubmitHandlerProfile);
-// лайк через делегирование
-const elementsCards = document.querySelector('.elements');
+function checkingStringsProfile(valueName, valueJob) {
 
-function addsLikeCads(event) {
-  const likeCard = event.target.closest('.element__btn-like');
+  if ((valueName !== '') && (valueJob !== '')) {
 
-  if (likeCard) {
-    likeCard.classList.toggle('element__btn-like_active');
+    profileName.textContent = valueName;
+    profileActivity.textContent = valueJob;
+
+    closesPopup(formProfile);
   }
 }
 
-elementsCards.addEventListener('click', addsLikeCads);
-// добавление списка ссылок в карточки
-// массив url картинок
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  formProfile.addEventListener('submit', formSubmitHandlerProfile);
+
+  // лайк через делегирование
+  const elementsCards = document.querySelector('.elements');
+
+  function addsLikeCads(event) {
+    const likeCard = event.target.closest('.element__btn-like');
+
+    if (likeCard) {
+      likeCard.classList.toggle('element__btn-like_active');
+    }
   }
-];
-// ивент при загрузки страницы
-document.addEventListener("DOMContentLoaded", downloadСards);
 
-function downloadСards() {
-  for (let i = 0; i < initialCards.length; i++) {
-    const name = initialCards[i].name;
-    const link = initialCards[i].link;
+  elementsCards.addEventListener('click', addsLikeCads);
+  // добавление списка ссылок в карточки
+  // массив url картинок
+  const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+  ];
+  // ивент при загрузки страницы
+  document.addEventListener("DOMContentLoaded", downloadСards);
 
-    addsElementCard(name, link);
+  function downloadСards() {
+    for (let i = 0; i < initialCards.length; i++) {
+      const nameCard = initialCards[i].name;
+      const linkCard = initialCards[i].link;
+
+      addsElementCard(nameCard, linkCard);
+    }
   }
-}
 
-function addsElementCard(nameCard, linkCard) {
-  const cardTemplate = document.querySelector('#tmp-card').content;
-  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+  function addsElementCard(nameCard, linkCard) {
+    const cardTemplate = document.querySelector('#tmp-card').content;
+    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
-  cardElement.querySelector('.element__title').textContent = nameCard
-  cardElement.querySelector('.element__image').src = linkCard
-  cardElement.querySelector('.element__image').alt = nameCard
+    cardElement.querySelector('.element__title').textContent = nameCard
+    cardElement.querySelector('.element__image').src = linkCard
+    cardElement.querySelector('.element__image').alt = nameCard
 
-  elementsCards.prepend(cardElement);
-}
+    elementsCards.prepend(cardElement);
+  }
+
+  // функция считывания с формы ссылки и название для карточки
+
+  function formSubmitHandlerCards(evt) {
+    evt.preventDefault();
+
+    let nameCard = elementsCards.name;
+    let linkCard = elementsCards.link;
+
+    nameCard = nameImgInput.value;
+    linkCard = linkInput.value;
+
+    checkingStringsCards(nameCard, linkCard)
+  }
+
+  function checkingStringsCards(nameCard, linkCard) {
+
+    if ((nameCard !== '') && linkCard.startsWith('http') && linkCard.endsWith('.jpg')) {
+      addsElementCard(nameCard, linkCard);
+      closesPopup(formCard);
+    }
+
+  }
+  // событие нажатия на кнопку в окне с добавление карточек
+  formCard.addEventListener('submit', formSubmitHandlerCards);
