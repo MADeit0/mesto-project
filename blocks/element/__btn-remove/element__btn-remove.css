@@ -1,0 +1,17 @@
+.element__btn-remove {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: no-repeat center url(../../../images/icons/btn-remove-cards.svg);
+  width: 18px;
+  height: 19px;
+  flex: 0 0 auto;
+  border: 0;
+  padding: 0;
+  transition: opacity .2s ease-in-out;
+  cursor: pointer;
+}
+
+.element__btn-remove:hover {
+  opacity: .5;
+}
