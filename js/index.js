@@ -1,5 +1,6 @@
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCards = document.querySelector('.popup_add-cards');
+const popupShowImg = document.querySelector('.popup_show-img');
 
 const profileBtnEdit = document.querySelector('.profile__btn-edit');
 const popupBtnLeave = document.querySelectorAll('.popup__btn-leave');
@@ -83,8 +84,32 @@ function checkingStringsProfile(valueName, valueJob) {
       likeCard.classList.toggle('element__btn-like_active');
     }
   }
+// функция удаления карточки делегирование
+  function removeCards(event) {
+    const removeCards = event.target.closest('.element__btn-remove');
+
+    if (removeCards) {
+      removeCards.closest('.element').remove();
+    }
+  }
+
+  function showImgCard(event) {
+    const showImgCard = event.target.closest('.element__image');
+
+    if (showImgCard) {
+      const element = showImgCard.closest('.element');
+      const elementTitle = element.querySelector('.element__title');
+      opensPopup(popupShowImg);
+      popupShowImg.querySelector('.popup__image').src = showImgCard.src;
+      popupShowImg.querySelector('.popup__image').alt = elementTitle.textContent;
+      popupShowImg.querySelector('.popup__text').textContent = elementTitle.textContent;
+    }
+  }
 
   elementsCards.addEventListener('click', addsLikeCads);
+  elementsCards.addEventListener('click', removeCards);
+  elementsCards.addEventListener('click', showImgCard);
+
   // добавление списка ссылок в карточки
   // массив url картинок
   const initialCards = [

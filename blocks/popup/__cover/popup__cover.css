@@ -1,4 +1,7 @@
 .popup__cover {
   position: relative;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min-content;
 }
