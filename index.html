@@ -36,8 +36,8 @@
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" action="#" method="post" name="profile_data">
           <fieldset class="popup__fieldset">
-            <input class="popup__inp-text" type="text" name="firstname" placeholder="Жак-Ив Кусто" title="Имя">
-            <input class="popup__inp-text" type="text" name="activity" placeholder="Исcледователь океана" title="Род деятельности">
+            <input class="popup__inp-text" type="text" name="firstname" placeholder="Жак-Ив Кусто" title="Имя" maxlength="100">
+            <input class="popup__inp-text" type="text" name="activity" placeholder="Исcледователь океана" title="Род деятельности" maxlength="100">
           </fieldset>
           <button class="popup__btn-accept" type="submit" title="Сохранить изменения" aria-label="Сохранить изменения">Сохранить</button>
         </form>
@@ -49,7 +49,7 @@
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" action="#" method="post" name="add_img_data">
           <fieldset class="popup__fieldset">
-            <input class="popup__inp-text" type="text" name="name_img" placeholder="Название" title="Название картинки">
+            <input class="popup__inp-text" type="text" name="name_img" placeholder="Название" title="Название картинки" maxlength="300">
             <input class="popup__inp-text" type="text" name="url_img" placeholder="Ссылка на картинку" title="Ссылка на картинку">
           </fieldset>
           <button class="popup__btn-accept" type="submit" title="Создать карточку" aria-label="Создать карточку">Создать</button>
@@ -68,7 +68,7 @@
 
   <template id="tmp-card">
     <article class="element">
-      <button class="element__btn-remove" type="button" title="Лайкнуть" aria-label="Лайкнуть"></button>
+      <button class="element__btn-remove" type="button" title="Удалить" aria-label="Удалить"></button>
       <img class="element__image" src="." alt="." title="Увеличить изображение">
       <div class="element__caption">
         <h2 class="element__title"></h2>

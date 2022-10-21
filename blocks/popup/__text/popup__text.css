@@ -1,8 +1,9 @@
 .popup__text {
+  align-self: flex-start;
   font-weight: 400;
   font-size: 12px;
   line-height: 1.25;
   color: white;
-  white-space: wrap;
+  word-break: break-word;
   margin: 10px 0 0;
 }
