@@ -136,7 +136,7 @@ function formSubmitHandlerCards(event) {
 }
 
 function checkingStringsCards(nameCard, linkCard) {
-  if ((nameCard !== '') && linkCard.startsWith('http') && linkCard.endsWith('.jpg')) {
+  if ((nameCard !== '') && linkCard.startsWith('http')) {
     addsElementCard(nameCard, linkCard);
     closesPopup(formCard);
   }
