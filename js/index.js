@@ -112,16 +112,10 @@ function submitProfileForm(event) {
   const valueName = nameInput.value;
   const valueJob = jobInput.value;
 
-  checkingStringsProfile(valueName, valueJob)
-}
+  profileName.textContent = valueName;
+  profileActivity.textContent = valueJob;
 
-function checkingStringsProfile(valueName, valueJob) {
-  if ((valueName !== '') && (valueJob !== '')) {
-    profileName.textContent = valueName;
-    profileActivity.textContent = valueJob;
-
-    closesPopup(formProfile);
-  }
+  closesPopup(formProfile);
 }
 
 formProfile.addEventListener('submit', submitProfileForm);
@@ -135,14 +129,8 @@ function SubmitCardsForm(event) {
   nameCard = nameImgInput.value;
   linkCard = linkInput.value;
 
-  checkingStringsCards(nameCard, linkCard)
-}
-
-function checkingStringsCards(nameCard, linkCard) {
-  if ((nameCard !== '') && linkCard.startsWith('http')) {
-    addsElementCard(nameCard, linkCard);
-    closesPopup(formCard);
-  }
+  addsElementCard(nameCard, linkCard);
+  closesPopup(formCard);
 }
 
 formCard.addEventListener('submit', SubmitCardsForm);
