@@ -13,7 +13,7 @@ const formCard = document.querySelector('form[name = add_img_data]');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
 
-const nameInput = formProfile.querySelector('input[name = firstname]');
+const nameInput = formProfile.querySelector('input[name = first-name]');
 const jobInput = formProfile.querySelector('input[name = activity]');
 
 const nameImgInput = formCard.querySelector('input[name = name_img]');
@@ -74,16 +74,13 @@ function addsElementCard(nameCards, linkCards) {
 }
 
 function opensPopup(classItem) {
-  selector = classItem.classList;
+  const selector = classItem.classList;
   selector.add('popup_opened');
 }
 
 function closesPopup(classItem) {
-  const millisecond = 300;
-  const listItem = classItem.closest('.popup');
-
-  listItem.classList.add('popup_closed');
-  setTimeout(() => listItem.classList.remove('popup_opened', 'popup_closed'), millisecond);
+  const selector = classItem.closest('.popup');
+  selector.classList.remove('popup_opened');
 }
 
 function getDefValueInp(classText, classInput) {
