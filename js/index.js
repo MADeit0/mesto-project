@@ -63,9 +63,12 @@ function addsElementCard(nameCards, linkCards) {
   const cardTemplate = document.querySelector('#tmp-card').content;
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
-  cardElement.querySelector('.element__title').textContent = nameCards;
-  cardElement.querySelector('.element__image').src = linkCards;
-  cardElement.querySelector('.element__image').alt = nameCards;
+  const titleElement = cardElement.querySelector('.element__title');
+  const imageElement = cardElement.querySelector('.element__image');
+
+  titleElement.textContent = nameCards;
+  imageElement.src = linkCards;
+  imageElement.alt = nameCards;
 
   elementsCards.prepend(cardElement);
 }
@@ -103,7 +106,7 @@ popupButtonsLeave.forEach((item) => {
   item.addEventListener('click', () => closesPopup(item));
 });
 
-function formSubmitHandlerProfile(event) {
+function submitProfileForm(event) {
   event.preventDefault();
 
   const valueName = nameInput.value;
@@ -121,9 +124,9 @@ function checkingStringsProfile(valueName, valueJob) {
   }
 }
 
-formProfile.addEventListener('submit', formSubmitHandlerProfile);
+formProfile.addEventListener('submit', submitProfileForm);
 
-function formSubmitHandlerCards(event) {
+function SubmitCardsForm(event) {
   event.preventDefault();
 
   let nameCard = elementsCards.name;
@@ -142,7 +145,7 @@ function checkingStringsCards(nameCard, linkCard) {
   }
 }
 
-formCard.addEventListener('submit', formSubmitHandlerCards);
+formCard.addEventListener('submit', SubmitCardsForm);
 
 function addsLikeCads(event) {
   const likeCard = event.target.closest('.element__btn-like');
