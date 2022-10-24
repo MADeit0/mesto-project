@@ -1,14 +1,5 @@
 .popup_opened {
-  display: flex;
-  animation: popup_opened .3s ease-in-out forwards;
-  opacity: 0;
-}
-
-@keyframes popup_opened {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  visibility: visible;
+  transition: .3s ease-in-out;
+  opacity: 1;
 }
