@@ -117,7 +117,7 @@ function submitProfileForm(event) {
 
 formProfile.addEventListener('submit', submitProfileForm);
 
-function SubmitCardsForm(event) {
+function submitCardsForm(event) {
   event.preventDefault();
 
   let nameCard = elementsCards.name;
