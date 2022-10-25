@@ -130,7 +130,7 @@ function submitCardsForm(event) {
   closesPopup(formCard);
 }
 
-formCard.addEventListener('submit', SubmitCardsForm);
+formCard.addEventListener('submit', submitCardsForm);
 
 function addsLikeCads(event) {
   const likeCard = event.target.closest('.element__btn-like');
