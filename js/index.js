@@ -1,3 +1,4 @@
+const popup = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCards = document.querySelector('.popup_add-cards');
 const popupShowImg = document.querySelector('.popup_show-img');
@@ -49,6 +50,18 @@ const initialCards = [
 ];
 
 document.addEventListener("DOMContentLoaded", downloadСards);
+
+document.addEventListener('keydown', (evt) => { //закрывает попап при нажатии на кнопку
+  if (evt.key === 'Escape') {
+    popup.forEach((item) => closesPopup(item));
+  }
+});
+
+document.addEventListener('click', (evt) => { //закрывает попап при нажатии на кнопку
+  if (evt.target.classList.contains("popup")) {
+    closesPopup(evt.target);
+  }
+});
 
 function downloadСards() {
   for (let i = 0; i < initialCards.length; i++) {
@@ -102,6 +115,8 @@ profileBtnAddCards.addEventListener('click', () => {
 popupButtonsLeave.forEach((item) => {
   item.addEventListener('click', () => closesPopup(item));
 });
+
+
 
 function submitProfileForm(event) {
   event.preventDefault();
