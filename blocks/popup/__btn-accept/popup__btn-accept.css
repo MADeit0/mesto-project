@@ -1,6 +1,6 @@
 .popup__btn-accept {
   width: 100%;
-  min-height: 50px;
+  min-height: 46px;
   background-color: black;
   font-family: inherit;
   font-weight: 400;
@@ -12,7 +12,7 @@
   box-sizing: border-box;
   border-radius: 2px;
   padding: 0;
-  margin-top: 45px;
+  margin-top: 24px;
   transition: opacity .2s ease-in-out;
   cursor: pointer;
 }
@@ -23,7 +23,8 @@
 
 @media screen and (min-width: 657px) {
   .popup__btn-accept {
+    min-height: 50px;
     font-size: 18px;
-    margin-top: 48px;
+    margin-top: 28px;
   }
 }
