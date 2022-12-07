@@ -1,0 +1,7 @@
+.profile__avatar-img {
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}

@@ -15,13 +15,19 @@
     </header>
     <main class="content">
       <section class="profile" aria-label="Профиль пользователя">
-        <img class="profile__avatar" src="./images/avatar/avatar.jpg" alt="картинка профиля">
+        <div class="profile__avatar">
+          <button class="profile__btn-avatar" type="button" title="Изменить картинку профиля"
+          aria-label="Добавить карточку профиля"></button>
+          <img class="profile__avatar-img" src="./images/avatar/avatar.jpg" alt="картинка профиля">
+        </div>
         <div class="profile__text-info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__activity">Исследователь океана</p>
-          <button class="profile__btn-edit" type="button" title="Редактировать профиль" aria-label="Редактировать профиль"></button>
+          <button class="profile__btn-edit" type="button" title="Редактировать профиль"
+            aria-label="Редактировать профиль"></button>
         </div>
-        <button class="profile__btn-add-cards" type="button" title="Добавить карточку" aria-label="Добавить карточку"></button>
+        <button class="profile__btn-add-cards" type="button" title="Добавить карточку"
+          aria-label="Добавить карточку"></button>
       </section>
       <section class="elements" aria-label="Галерея карточек с изображением">
       </section>
@@ -36,12 +42,15 @@
         <h3 class="popup__title">Редактировать профиль</h3>
         <form class="popup__form" action="#" method="post" name="profile_data">
           <fieldset class="popup__fieldset">
-            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="first-name" placeholder="Имя" title="Имя" maxlength="100">
+            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="first-name" placeholder="Имя"
+              title="Имя" maxlength="100">
             <p class="popup__error popup__error_visible">Вы пропустили это поле.</p>
-            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="activity" placeholder="Род деятельности" title="Род деятельности" maxlength="100">
+            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="activity"
+              placeholder="Род деятельности" title="Род деятельности" maxlength="100">
             <p class="popup__error popup__error_visible">Вы пропустили это поле.</p>
           </fieldset>
-          <button class="popup__btn-accept popup__btn-accept_disabled" disabled="true" type="submit" title="Сохранить изменения" aria-label="Сохранить изменения">Сохранить</button>
+          <button class="popup__btn-accept popup__btn-accept_disabled" disabled="true" type="submit"
+            title="Сохранить изменения" aria-label="Сохранить изменения">Сохранить</button>
         </form>
       </div>
     </div>
@@ -51,16 +60,33 @@
         <h3 class="popup__title">Новое место</h3>
         <form class="popup__form" action="#" method="post" name="add_img_data">
           <fieldset class="popup__fieldset">
-            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="name_img" placeholder="Название" title="Название картинки" maxlength="300">
+            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="name_img" placeholder="Название"
+              title="Название картинки" maxlength="300">
             <p class="popup__error popup__error_visible">Вы пропустили это поле.</p>
-            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="url_img" placeholder="Ссылка на картинку" title="Ссылка на картинку">
+            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="url_img"
+              placeholder="Ссылка на картинку" title="Ссылка на картинку">
             <p class="popup__error popup__error_visible">Вы пропустили это поле.</p>
           </fieldset>
-          <button class="popup__btn-accept popup__btn-accept_disabled" disabled="true" type="submit" title="Создать карточку" aria-label="Создать карточку">Создать</button>
+          <button class="popup__btn-accept popup__btn-accept_disabled" disabled="true" type="submit"
+            title="Создать карточку" aria-label="Создать карточку">Создать</button>
         </form>
       </div>
     </div>
-
+    <div class="popup popup_edit-avatar">
+      <div class="popup__container">
+        <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form class="popup__form" action="#" method="post" name="add_img_data">
+          <fieldset class="popup__fieldset">
+            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="url_img"
+              placeholder="Ссылка на картинку" title="Ссылка на картинку">
+            <p class="popup__error popup__error_visible">Вы пропустили это поле.</p>
+          </fieldset>
+          <button class="popup__btn-accept popup__btn-accept_disabled" disabled="true" type="submit"
+            title="Создать карточку" aria-label="Создать карточку">Создать</button>
+        </form>
+      </div>
+    </div>
     <div class="popup popup_show-img">
       <div class="popup__cover">
         <img class="popup__image" src="." alt=".">
