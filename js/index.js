@@ -2,14 +2,16 @@ const popup = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddCards = document.querySelector('.popup_add-cards');
 const popupShowImg = document.querySelector('.popup_show-img');
+const popupEditImg = document.querySelector('.popup_edit-avatar');
 
 const profileButtonEdit = document.querySelector('.profile__btn-edit');
 const popupButtonsLeave = document.querySelectorAll('.popup__btn-leave');
 const profileBtnAddCards = document.querySelector('.profile__btn-add-cards');
-
+const profileBtnEditAvatar = document.querySelector('.profile__btn-avatar');
 
 const formProfile = document.querySelector('form[name = profile_data]');
 const formCard = document.querySelector('form[name = add_img_data]');
+const formAvatar = document.querySelector('form[name = add_avatar_data]');
 
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
@@ -19,6 +21,7 @@ const jobInput = formProfile.querySelector('input[name = activity]');
 
 const nameImgInput = formCard.querySelector('input[name = name_img]');
 const linkInput = formCard.querySelector('input[name = url_img]');
+const avatarInput = formAvatar.querySelector('input[name = url_avatar]');
 
 const elementsCards = document.querySelector('.elements');
 
@@ -99,7 +102,7 @@ function closesPopup(classItem) {
 function getDefValueInp(classText, classInput) {
   classInput.value = classText.textContent;
 }
-
+// ---------------------------------------------------
 profileButtonEdit.addEventListener('click', () => {
   opensPopup(popupEditProfile);
   getDefValueInp(profileName, nameInput);
@@ -112,11 +115,16 @@ profileBtnAddCards.addEventListener('click', () => {
   opensPopup(popupAddCards);
 });
 
+profileBtnEditAvatar.addEventListener('click', () => {
+  avatarInput.value = '';
+  opensPopup(popupEditImg);
+});
+
 popupButtonsLeave.forEach((item) => {
   item.addEventListener('click', () => closesPopup(item));
 });
 
-
+// -----------------------------------------------------
 
 function submitProfileForm(event) {
   event.preventDefault();
@@ -146,6 +154,17 @@ function submitCardsForm(event) {
 }
 
 formCard.addEventListener('submit', submitCardsForm);
+
+function submitAvatarForm(event) {
+  event.preventDefault();
+
+  let linkImg = document.querySelector('.profile__avatar-img');
+  linkImg.src = avatarInput.value
+
+  closesPopup(formAvatar);
+}
+
+formAvatar.addEventListener('submit', submitAvatarForm);
 
 function addsLikeCads(event) {
   const likeCard = event.target.closest('.element__btn-like');
