@@ -17,7 +17,7 @@
       <section class="profile" aria-label="Профиль пользователя">
         <div class="profile__avatar">
           <button class="profile__btn-avatar" type="button" title="Изменить картинку профиля"
-          aria-label="Добавить карточку профиля"></button>
+          aria-label="Изменить карточку профиля"></button>
           <img class="profile__avatar-img" src="./images/avatar/avatar.jpg" alt="картинка профиля">
         </div>
         <div class="profile__text-info">
@@ -76,14 +76,14 @@
       <div class="popup__container">
         <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
         <h3 class="popup__title">Обновить аватар</h3>
-        <form class="popup__form" action="#" method="post" name="add_img_data">
+        <form class="popup__form" action="#" method="post" name="add_avatar_data">
           <fieldset class="popup__fieldset">
-            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="url_img"
+            <input class="popup__inp-text popup__inp-text_type_error" type="text" name="url_avatar"
               placeholder="Ссылка на картинку" title="Ссылка на картинку">
             <p class="popup__error popup__error_visible">Вы пропустили это поле.</p>
           </fieldset>
-          <button class="popup__btn-accept popup__btn-accept_disabled" disabled="true" type="submit"
-            title="Создать карточку" aria-label="Создать карточку">Создать</button>
+          <button class="popup__btn-accept popup__btn-accept_disabled"  type="submit"
+            title="Сохранить карточку" aria-label="Сохранить карточку">Сохранить</button>
         </form>
       </div>
     </div>
