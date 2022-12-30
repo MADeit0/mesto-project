@@ -46,8 +46,9 @@
               title="Имя" minlength="2" maxlength="40" pattern="^[A-Za-zА-Яа-яёЁ\-\s]+$" required
               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
             <p class="popup__input-error name-error"></p>
-            <input id="activity" class="popup__input" type="text" name="activity"
-              placeholder="Род деятельности" title="Род деятельности" minlength="2" maxlength="200" required>
+            <input id="activity" class="popup__input" type="text" name="activity" placeholder="Род деятельности"
+              title="Род деятельности" minlength="2" maxlength="200" pattern="^[A-Za-zА-Яа-яёЁ\-\s]+$" required
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
             <p class="popup__input-error activity-error"></p>
             <button class="popup__btn-accept" type="submit"
             title="Сохранить изменения" aria-label="Сохранить изменения">Сохранить</button>
