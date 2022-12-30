@@ -1,4 +1,4 @@
-.popup__inp-text {
+.popup__input {
   width: 100%;
   font-family: inherit;
   font-weight: 400;
@@ -11,6 +11,6 @@
   padding: 0 0 8px 0;
 }
 
-.popup__inp-text::placeholder {
-  color: black;
+.popup__input::placeholder {
+  color: #C4C4C4;
 }

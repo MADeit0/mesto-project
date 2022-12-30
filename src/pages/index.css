@@ -57,14 +57,14 @@
 @import url('../blocks/popup/__image/popup__image.css');
 @import url('../blocks/popup/__text/popup__text.css');
 @import url('../blocks/popup/__fieldset/popup__fieldset.css');
-@import url('../blocks/popup/__inp-text/popup__inp-text.css');
-@import url('../blocks/popup/__error/popup__error.css');
+@import url('../blocks/popup/__input/popup__input.css');
+@import url('../blocks/popup/__input-error/popup__input-error.css');
 @import url('../blocks/popup/__btn-accept/popup__btn-accept.css');
 
 
 @import url('../blocks/popup/_opened/popup_opened.css');
-@import url('../blocks/popup/__inp-text/_type/popup__inp-text_type_error.css');
-@import url('../blocks/popup/__error/popup__error_visible.css');
+@import url('../blocks/popup/__input/_type/popup__input_type_error.css');
+@import url('../blocks/popup/__input-error/popup__input-error_visible.css');
 @import url('../blocks/popup/__btn-accept/popup__btn-accept_disabled.css');
 /* ------------------------------------------------------------------------------- */
 
