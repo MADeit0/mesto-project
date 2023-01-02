@@ -1,3 +1,5 @@
+import './index.css';
+
 import { enableValidation } from '../components/validate.js';
 
 import {
