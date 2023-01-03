@@ -3,8 +3,8 @@ import './index.css';
 import { enableValidation } from '../components/validate.js';
 
 import {
-  opensPopup,
-  closesPopup,
+  openPopup,
+  closePopup,
   getDefValueInp
 } from '../components/modal.js';
 
@@ -50,28 +50,6 @@ const listSettings = {
 
 enableValidation(listSettings);
 
-document.addEventListener("DOMContentLoaded", downloadСards);
-
-profileButtonEdit.addEventListener('click', () => {
-  opensPopup(popupEditProfile);
-  getDefValueInp(profileName, nameInput);
-  getDefValueInp(profileActivity, jobInput);
-});
-
-profileBtnAddCards.addEventListener('click', () => {
-  const popupAddCards = document.querySelector('.popup_add-cards');
-  opensPopup(popupAddCards);
-});
-
-profileBtnEditAvatar.addEventListener('click', () => {
-  const popupEditImg = document.querySelector('.popup_edit-avatar');
-  opensPopup(popupEditImg);
-});
-
-popupButtonsLeave.forEach((item) => {
-  item.addEventListener('click', () => closesPopup(item, listSettings));
-});
-
 const submitProfileForm = (event) => {
   event.preventDefault();
 
@@ -81,10 +59,8 @@ const submitProfileForm = (event) => {
   profileName.textContent = valueName;
   profileActivity.textContent = valueJob;
 
-  closesPopup(formProfile, listSettings);
+  closePopup(formProfile, listSettings);
 }
-
-formProfile.addEventListener('submit', submitProfileForm);
 
 const submitCardsForm = (event) => {
   event.preventDefault();
@@ -96,10 +72,8 @@ const submitCardsForm = (event) => {
   linkCard = linkInput.value;
 
   addsElementCard(nameCard, linkCard);
-  closesPopup(formCard, listSettings);
+  closePopup(formCard, listSettings);
 }
-
-formCard.addEventListener('submit', submitCardsForm);
 
 const submitAvatarForm = (event) => {
   event.preventDefault();
@@ -107,21 +81,47 @@ const submitAvatarForm = (event) => {
   let linkImg = document.querySelector('.profile__avatar-img');
   linkImg.src = avatarInput.value;
 
-  closesPopup(formAvatar, listSettings);
+  closePopup(formAvatar, listSettings);
 }
-
-formAvatar.addEventListener('submit', submitAvatarForm);
 
 export const closeOnEsc = (evt) => {
   if (evt.key === 'Escape') {
     const popupActive = document.querySelector('.popup_opened');
-    closesPopup(popupActive, listSettings);
+    closePopup(popupActive, listSettings);
   }
 }
 
+document.addEventListener("DOMContentLoaded", downloadСards);
+
+profileButtonEdit.addEventListener('click', () => {
+  openPopup(popupEditProfile);
+  getDefValueInp(profileName, nameInput);
+  getDefValueInp(profileActivity, jobInput);
+});
+
+profileBtnAddCards.addEventListener('click', () => {
+  const popupAddCards = document.querySelector('.popup_add-cards');
+  openPopup(popupAddCards);
+});
+
+profileBtnEditAvatar.addEventListener('click', () => {
+  const popupEditImg = document.querySelector('.popup_edit-avatar');
+  openPopup(popupEditImg);
+});
+
+popupButtonsLeave.forEach((item) => {
+  item.addEventListener('click', () => closePopup(item, listSettings));
+});
+
+formProfile.addEventListener('submit', submitProfileForm);
+
+formCard.addEventListener('submit', submitCardsForm);
+
+formAvatar.addEventListener('submit', submitAvatarForm);
+
 document.addEventListener('mousedown', (evt) => {
   if (evt.target.classList.contains("popup")) {
-    closesPopup(evt.target, listSettings);
+    closePopup(evt.target, listSettings);
   }
 });
 

@@ -1,5 +1,5 @@
 import { initialCards } from './initialCards.js';
-import { opensPopup } from './modal.js';
+import { openPopup } from './modal.js';
 
 const elementsCards = document.querySelector('.elements');
 const popupShowImg = document.querySelector('.popup_show-img');
@@ -55,7 +55,7 @@ const showImgCard = (event) => {
   if (showImgCard) {
     const element = showImgCard.closest('.element');
     const elementTitle = element.querySelector('.element__title');
-    opensPopup(popupShowImg);
+    openPopup(popupShowImg);
     popupShowImg.querySelector('.popup__image').src = showImgCard.src;
     popupShowImg.querySelector('.popup__image').alt = elementTitle.textContent;
     popupShowImg.querySelector('.popup__text').textContent = elementTitle.textContent;
