@@ -33,10 +33,7 @@ import {
 
 import {
   addsElementCard,
-  addsLikeCads,
-  removeCards,
-  showImgCard
-} from '../components/cardcopy.js';
+} from '../components/card.js';
 
 const downloadСards = () => {
   initialCards.forEach((CardsList) => {
@@ -120,7 +117,3 @@ popupButtonsLeave.forEach((item) => {
 formProfile.addEventListener('submit', submitProfileForm);
 formCard.addEventListener('submit', submitCardsForm);
 formAvatar.addEventListener('submit', submitAvatarForm);
-
-elementsCards.addEventListener('click', addsLikeCads);
-elementsCards.addEventListener('click', removeCards);
-elementsCards.addEventListener('click', showImgCard);
