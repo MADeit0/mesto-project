@@ -83,5 +83,5 @@ const enableValidation = (settings) => {
   });
 }
 
-export { enableValidation, hideInputError, resetButtonState};
+export { enableValidation, hideInputError, resetButtonState };
 
