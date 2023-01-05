@@ -1,9 +1,13 @@
-import { initialCards } from './initialCards.js';
+import {
+  elementsCards,
+  popupShowImg
+} from './constants.js';
+
+import {
+  initialCards
+} from './constants.js';
+
 import { openPopup } from './modal.js';
-
-const elementsCards = document.querySelector('.elements');
-const popupShowImg = document.querySelector('.popup_show-img');
-
 
 // добавление карточки
 const addsElementCard = (nameCards, linkCards) => {
@@ -53,17 +57,15 @@ const showImgCard = (event) => {
   const showImgCard = event.target.closest('.element__image');
 
   if (showImgCard) {
-    const element = showImgCard.closest('.element');
-    const elementTitle = element.querySelector('.element__title');
     openPopup(popupShowImg);
-    popupShowImg.querySelector('.popup__image').src = showImgCard.src;
-    popupShowImg.querySelector('.popup__image').alt = elementTitle.textContent;
-    popupShowImg.querySelector('.popup__text').textContent = elementTitle.textContent;
+
+    popupShowImg.querySelector('.popup__image').src = event.target.src;
+    popupShowImg.querySelector('.popup__image').alt = event.target.alt;
+    popupShowImg.querySelector('.popup__text').textContent = event.target.alt;
   }
 }
 
 export {
-  elementsCards,
   addsElementCard,
   downloadСards,
   addsLikeCads,
