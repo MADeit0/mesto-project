@@ -14,11 +14,6 @@ const toggleButtonState = (inputList, buttonElement, settings) => {
   }
 }
 
-const resetButtonState = (buttonElement, settings) => {
-  buttonElement.disabled = true;
-  buttonElement.classList.add(settings.inactiveButtonClass);
-}
-
 // добавляет красную рамку в поле
 const showInputError = (formElement, inputElement, errorMessage, settings) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -36,6 +31,25 @@ const hideInputError = (formElement, inputElement, settings) => {
   errorElement.classList.remove(settings.errorClass);
   errorElement.textContent = '';
 }
+
+const resetButtonState = (buttonElement, settings) => {
+  buttonElement.disabled = true;
+  buttonElement.classList.add(settings.inactiveButtonClass);
+}
+
+const resetFormInput = (formElement, settings) => {
+  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
+  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, settings);
+  });
+
+  formElement.reset();
+  resetButtonState(buttonElement, settings);
+
+}
+
 // проверяет валидность импута и в зависимости от состояния
 // удаляет или добавляет класс с ошибкой
 const checkInputValidity = (formElement, inputElement, settings) => {
@@ -83,5 +97,5 @@ const enableValidation = (settings) => {
   });
 }
 
-export { enableValidation, hideInputError, resetButtonState };
+export { enableValidation, resetFormInput };
 

@@ -1,4 +1,8 @@
+export const keyboardBtn = 'Escape';
+
 export const popupEditProfile = document.querySelector('.popup_edit-profile');
+export const popupAddCards = document.querySelector('.popup_add-cards');
+export const popupEditAvatar = document.querySelector('.popup_edit-avatar');
 
 export const profileButtonEdit = document.querySelector('.profile__btn-edit');
 export const popupButtonsLeave = document.querySelectorAll('.popup__btn-leave');
