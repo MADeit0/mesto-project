@@ -51,7 +51,7 @@ const addsElementCard = (elementsCard) => {
 }
 
 const renderCard = (CardsList) => {
-  elementsCards.prepend(addsElementCard(CardsList));
+  elementsCards.append(addsElementCard(CardsList));
 }
 
 export { addsElementCard, renderCard };

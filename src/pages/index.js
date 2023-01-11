@@ -1,6 +1,6 @@
 import './index.css';
 
-import { getInitialData, isRejected, } from '../components/api.js';
+import { getInitialData, isRejected, setProfileData, setNewCard } from '../components/api.js';
 
 import {
   keyboardBtn,
@@ -53,7 +53,7 @@ getInitialData()
     userId = users._id;
 
     cards.forEach((card) => {
-      renderCard(card);
+      elementsCards.append(addsElementCard(card));
     })
   })
   .catch((err) => isRejected(err));
@@ -64,10 +64,15 @@ const submitProfileForm = (event) => {
   const valueName = nameInput.value;
   const valueJob = jobInput.value;
 
-  profileName.textContent = valueName;
-  profileActivity.textContent = valueJob;
+  setProfileData(valueName, valueJob)
+    .then((profile) => {
+      profileName.textContent = profile.name;
+      profileActivity.textContent = profile.about;
 
-  closePopup(formProfile);
+      closePopup(formProfile);
+    })
+    .catch((err) => isRejected(err));
+
 }
 
 const submitCardsForm = (event) => {
@@ -76,10 +81,13 @@ const submitCardsForm = (event) => {
   const nameImgInput = formCard.querySelector('input[name = name_img]');
   const linkInput = formCard.querySelector('input[name = url_img]');
 
-  elementsCards.prepend(addsElementCard({ name: nameImgInput.value, link: linkInput.value }));
-
-  closePopup(formCard);
-  formCard.reset();
+  setNewCard(nameImgInput.value, linkInput.value)
+    .then((card) => {
+      elementsCards.prepend(addsElementCard(card));
+      closePopup(formCard);
+    })
+    .catch((err) => isRejected(err))
+    .finally(() => formCard.reset());
 }
 
 const submitAvatarForm = (event) => {
