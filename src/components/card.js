@@ -1,6 +1,11 @@
-import { popupShowImg } from './constants';
+
+import imgDefCard from '../images/card/card.png';
+
+import { popupShowImg, elementsCards } from './constants';
 
 import { openPopup } from './modal.js';
+
+import { isImgNotloading } from './utils.js';
 
 // добавление лайка карточке
 const addsLikeCads = (event) => {
@@ -23,6 +28,7 @@ const showImgCard = (event) => {
 
 // добавление карточки
 const addsElementCard = (elementsCard) => {
+
   const cardTemplate = document.querySelector('#tmp-card').content;
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
@@ -35,6 +41,8 @@ const addsElementCard = (elementsCard) => {
   cardImage.src = elementsCard.link;
   cardImage.alt = elementsCard.name;
 
+  isImgNotloading(cardImage, imgDefCard)
+
   cardLike.addEventListener('click', addsLikeCads);
   cardRemove.addEventListener('click', removeCards);
   cardImage.addEventListener('click', showImgCard);
@@ -42,4 +50,8 @@ const addsElementCard = (elementsCard) => {
   return cardElement;
 }
 
-export { addsElementCard };
+const renderCard = (CardsList) => {
+  elementsCards.prepend(addsElementCard(CardsList));
+}
+
+export { addsElementCard, renderCard };

@@ -15,6 +15,7 @@ export const formAvatar = document.querySelector('form[name = add_avatar_data]')
 
 export const profileName = document.querySelector('.profile__name');
 export const profileActivity = document.querySelector('.profile__activity');
+export const linkImg = document.querySelector('.profile__avatar-img');
 
 export const elementsCards = document.querySelector('.elements');
 export const popupShowImg = document.querySelector('.popup_show-img');

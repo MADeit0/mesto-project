@@ -1,5 +1,7 @@
 import './index.css';
 
+import { getInitialData, isRejected, } from '../components/api.js';
+
 import {
   keyboardBtn,
   popupEditProfile,
@@ -14,6 +16,7 @@ import {
   formAvatar,
   profileName,
   profileActivity,
+  linkImg,
   elementsCards,
   nameInput,
   jobInput,
@@ -37,13 +40,23 @@ import {
 
 import {
   addsElementCard,
+  renderCard
 } from '../components/card.js';
 
-const downloadСards = () => {
-  initialCards.forEach((CardsList) => {
-    elementsCards.prepend(addsElementCard(CardsList));
+let userId = '';
+
+getInitialData()
+  .then(([users, cards]) => {
+    profileName.textContent = users.name;
+    profileActivity.textContent = users.about;
+    linkImg.src = users.avatar;
+    userId = users._id;
+
+    cards.forEach((card) => {
+      renderCard(card);
+    })
   })
-}
+  .catch((err) => isRejected(err));
 
 const submitProfileForm = (event) => {
   event.preventDefault();
@@ -73,7 +86,6 @@ const submitAvatarForm = (event) => {
   event.preventDefault();
 
   const avatarInput = formAvatar.querySelector('input[name = url_avatar]');
-  const linkImg = document.querySelector('.profile__avatar-img');
 
   linkImg.src = avatarInput.value;
 
@@ -89,8 +101,6 @@ export const closeOnEsc = (evt) => {
 }
 
 enableValidation(listSettings);
-
-document.addEventListener("DOMContentLoaded", downloadСards);
 
 profileButtonEdit.addEventListener('click', () => {
   resetFormInput(formProfile, listSettings);
