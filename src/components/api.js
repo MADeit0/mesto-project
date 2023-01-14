@@ -20,16 +20,18 @@ const isRejected = (err) => {
   console.log(err);
 }
 
-const getInitialData = () => {
-  return Promise.all([
-    fetch(`${config.baseUrl}/users/me`, {
-      headers: config.headers
-    }),
-    fetch(`${config.baseUrl}/cards`, {
-      headers: config.headers
-    })
-  ])
-    .then((res) => Promise.all(res.map((data) => isResponse(data))));
+const getInitialProfile = () => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers
+  })
+    .then(res => isResponse(res));
+}
+
+const getInitialCards = () => {
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers
+  })
+    .then(res => isResponse(res));
 }
 
 const setProfileData = (profileName, profileAbout) => {
@@ -67,7 +69,7 @@ const setProfileAvatar = (link) => {
     .then(res => isResponse(res));
 }
 
-const promiseCardDelete = (cardId) => {
+const CardDelete = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers
@@ -84,11 +86,12 @@ const putLikeCard = (cardId, methodToggle) => {
 }
 
 export {
-  getInitialData,
+  getInitialProfile,
+  getInitialCards,
   isRejected,
   setProfileData,
   setNewCard,
   setProfileAvatar,
   putLikeCard,
-  promiseCardDelete
+  CardDelete
 }
