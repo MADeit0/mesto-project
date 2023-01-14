@@ -1,13 +1,14 @@
 import './index.css';
 
 import {
-  getInitialData,
+  getInitialProfile,
+  getInitialCards,
   isRejected,
   setProfileData,
   setNewCard,
   setProfileAvatar,
   putLikeCard,
-  promiseCardDelete
+  CardDelete
 } from '../components/api.js';
 
 import {
@@ -44,13 +45,13 @@ import {
 import {
   openPopup,
   closePopup,
-  getDefValueInp,
+  getDefaultValueInput,
   PopupRenderLoading
 } from '../components/modal.js';
 
 import {
-  addsElementCard,
-  removeCard,
+  CreateCard,
+  deleteCardFromPage,
   addsLikeCads,
   changeLike
 } from '../components/card.js';
@@ -72,6 +73,18 @@ const switchLikeCard = (event) => {
     .then((card) => {
       addsLikeCads(btnLike);
       changeLike(element, card.likes.length);
+    })
+    .catch((err) => isRejected(err));
+}
+
+const deleteCardFromServer = () => {
+  const id = popupRemoveCard.dataset.id
+  const element = elementsCards.querySelector(`[data-card-id = '${id}']`);
+
+  CardDelete(id)
+    .then(() => {
+      deleteCardFromPage(element)
+      closePopup(btnRemoveCard)
     })
     .catch((err) => isRejected(err));
 }
@@ -103,7 +116,7 @@ const submitCardsForm = (event) => {
 
   setNewCard(nameImgInput.value, linkInput.value)
     .then((card) => {
-      elementsCards.prepend(addsElementCard(userId, card, switchLikeCard));
+      elementsCards.prepend(CreateCard(userId, card, switchLikeCard));
       closePopup(formCard);
     })
     .catch((err) => isRejected(err))
@@ -137,15 +150,16 @@ export const closeOnEsc = (evt) => {
     closePopup(popupActive);
   }
 }
+
 // получение данных пользователя при загрузки страницы
-getInitialData()
+Promise.all([getInitialProfile(), getInitialCards()])
   .then(([user, cards]) => {
     profileName.textContent = user.name;
     profileActivity.textContent = user.about;
     linkImg.src = user.avatar;
     userId = user._id;
     cards.forEach((card) => {
-      elementsCards.append(addsElementCard(userId, card, switchLikeCard));
+      elementsCards.append(CreateCard(userId, card, switchLikeCard));
     })
   })
   .catch((err) => isRejected(err));
@@ -154,11 +168,11 @@ getInitialData()
 enableValidation(listSettings);
 
 profileButtonEdit.addEventListener('click', () => {
+  getDefaultValueInput(profileName, nameInput);
+  getDefaultValueInput(profileActivity, jobInput);
   PopupRenderLoading(formProfile, true);
   resetFormInput(formProfile, listSettings);
   openPopup(popupEditProfile);
-  getDefValueInp(profileName, nameInput);
-  getDefValueInp(profileActivity, jobInput);
 });
 
 profileBtnAddCards.addEventListener('click', () => {
@@ -173,6 +187,8 @@ profileBtnEditAvatar.addEventListener('click', () => {
   openPopup(popupEditAvatar);
 });
 
+btnRemoveCard.addEventListener('click', deleteCardFromServer);
+
 document.addEventListener('mousedown', (evt) => {
   if (evt.target.classList.contains("popup")) {
     closePopup(evt.target);
@@ -186,15 +202,3 @@ popupButtonsLeave.forEach((item) => {
 formProfile.addEventListener('submit', submitProfileForm);
 formCard.addEventListener('submit', submitCardsForm);
 formAvatar.addEventListener('submit', submitAvatarForm);
-
-btnRemoveCard.addEventListener('click', () => {
-  const id = popupRemoveCard.dataset.id
-  const element = elementsCards.querySelector(`[data-card-id = '${id}']`);
-
-  promiseCardDelete(id)
-    .then(() => {
-      removeCard(element)
-      closePopup(btnRemoveCard)
-    })
-    .catch((err) => isRejected(err));
-});

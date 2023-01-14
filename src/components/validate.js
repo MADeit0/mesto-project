@@ -67,7 +67,7 @@ const checkInputValidity = (formElement, inputElement, settings) => {
 }
 
 // находит все инпуты в форме и вешает на них слушатель input
-// проеверяет валидность каждого импута и и активирует или деактивирует кнопку отправки
+// проеверяет валидность каждого импута и активирует или деактивирует кнопку отправки
 const setEventListeners = (formElement, settings) => {
   const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
   const buttonElement = formElement.querySelector(settings.submitButtonSelector);

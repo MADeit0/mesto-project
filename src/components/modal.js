@@ -24,7 +24,7 @@ const closePopup = (modalWindow) => {
   document.removeEventListener('keydown', closeOnEsc);
 }
 
-const getDefValueInp = (classText, classInput) => {
+const getDefaultValueInput = (classText, classInput) => {
   classInput.value = classText.textContent;
 }
 // в зависимости от принятого состояния меняет текст в кнопке при загрузки данных на сервер
@@ -37,6 +37,6 @@ export {
   openPopupDeleteCard,
   openPopup,
   closePopup,
-  getDefValueInp,
+  getDefaultValueInput,
   PopupRenderLoading
 }

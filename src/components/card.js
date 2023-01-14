@@ -14,40 +14,40 @@ const changeLike = (element, lengthLikes) => {
 }
 
 // удаление карточки
-const removeCard = (card) => {
+const deleteCardFromPage = (card) => {
   card.remove();
 }
 
 // просмотр картинки карточки
 const showImgCard = (event) => {
-  openPopup(popupShowImg);
-
   popupShowImg.querySelector('.popup__image').src = event.target.src;
   popupShowImg.querySelector('.popup__image').alt = event.target.alt;
   popupShowImg.querySelector('.popup__text').textContent = event.target.alt;
+
+  openPopup(popupShowImg);
 }
 // инициализация карточки, добавление слушателей, добавление маркера лайка если
 // лайк был поставлен ранее, добавление информации о количестве поставленных лайков
-const addsElementCard = (myId, elementsCard, likeCardCallback) => {
+const CreateCard = (myId, elementsCard, likeCardCallback) => {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
   const cardLike = cardElement.querySelector('.element__btn-like');
   const cardRemove = cardElement.querySelector('.element__btn-remove');
   const cardImage = cardElement.querySelector('.element__image');
   const cardTitle = cardElement.querySelector('.element__title');
-  const likesСount = cardElement.querySelector('.element__like-count');
+  const likesCount = cardElement.querySelector('.element__like-count');
 
   cardImage.src = elementsCard.link;
   cardImage.alt = elementsCard.name;
   cardTitle.textContent = elementsCard.name;
-  likesСount.textContent = elementsCard.likes.length;
+  likesCount.textContent = elementsCard.likes.length;
   cardElement.dataset.cardId = elementsCard._id;
 
-  const likeBool = elementsCard.likes.some((likes) => {
+  const isLiked = elementsCard.likes.some((likes) => {
     return likes._id === myId;
   });
 
-  if (likeBool) {
+  if (isLiked) {
     addsLikeCads(cardLike);
   }
 
@@ -63,4 +63,4 @@ const addsElementCard = (myId, elementsCard, likeCardCallback) => {
   return cardElement;
 }
 
-export { addsElementCard, removeCard, addsLikeCads, changeLike }
+export { CreateCard, deleteCardFromPage, addsLikeCads, changeLike }
