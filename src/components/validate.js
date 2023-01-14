@@ -98,4 +98,3 @@ const enableValidation = (settings) => {
 }
 
 export { enableValidation, resetFormInput };
-
