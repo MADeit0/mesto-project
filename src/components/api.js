@@ -1,5 +1,4 @@
-const cohortId = 'plus-cohort-18';
-const token = '7385ede6-107c-4a27-9028-b467b4c4382e';
+import { cohortId, token } from './constants';
 
 const config = {
   baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
@@ -57,4 +56,39 @@ const setNewCard = (cardName, cardLink) => {
     .then(res => isResponse(res));
 }
 
-export { getInitialData, isRejected, setProfileData, setNewCard };
+const setProfileAvatar = (link) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: link
+    })
+  })
+    .then(res => isResponse(res));
+}
+
+const promiseCardDelete = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers
+  })
+    .then(res => isResponse(res));
+}
+
+const putLikeCard = (cardId, methodToggle) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: methodToggle,
+    headers: config.headers
+  })
+    .then(res => isResponse(res));
+}
+
+export {
+  getInitialData,
+  isRejected,
+  setProfileData,
+  setNewCard,
+  setProfileAvatar,
+  putLikeCard,
+  promiseCardDelete
+}

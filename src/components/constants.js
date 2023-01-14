@@ -1,13 +1,21 @@
+export const cohortId = 'plus-cohort-18';
+export const token = '7385ede6-107c-4a27-9028-b467b4c4382e';
+
 export const keyboardBtn = 'Escape';
+
+export const cardTemplate = document.querySelector('#tmp-card').content;
 
 export const popupEditProfile = document.querySelector('.popup_edit-profile');
 export const popupAddCards = document.querySelector('.popup_add-cards');
 export const popupEditAvatar = document.querySelector('.popup_edit-avatar');
+export const popupRemoveCard = document.querySelector('.popup_remove-card');
 
 export const profileButtonEdit = document.querySelector('.profile__btn-edit');
 export const popupButtonsLeave = document.querySelectorAll('.popup__btn-leave');
 export const profileBtnAddCards = document.querySelector('.profile__btn-add-cards');
 export const profileBtnEditAvatar = document.querySelector('.profile__btn-avatar');
+
+export const btnRemoveCard = popupRemoveCard.querySelector('.popup__btn-accept');
 
 export const formProfile = document.querySelector('form[name = profile_data]');
 export const formCard = document.querySelector('form[name = add_img_data]');
@@ -31,30 +39,3 @@ export const listSettings = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_visible'
 }
-
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];

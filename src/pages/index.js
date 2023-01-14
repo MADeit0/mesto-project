@@ -1,16 +1,26 @@
 import './index.css';
 
-import { getInitialData, isRejected, setProfileData, setNewCard } from '../components/api.js';
+import {
+  getInitialData,
+  isRejected,
+  setProfileData,
+  setNewCard,
+  setProfileAvatar,
+  putLikeCard,
+  promiseCardDelete
+} from '../components/api.js';
 
 import {
   keyboardBtn,
   popupEditProfile,
   popupAddCards,
   popupEditAvatar,
+  popupRemoveCard,
   profileButtonEdit,
   popupButtonsLeave,
   profileBtnAddCards,
   profileBtnEditAvatar,
+  btnRemoveCard,
   formProfile,
   formCard,
   formAvatar,
@@ -20,7 +30,6 @@ import {
   elementsCards,
   nameInput,
   jobInput,
-  initialCards
 } from '../components/constants.js';
 
 import {
@@ -35,31 +44,41 @@ import {
 import {
   openPopup,
   closePopup,
-  getDefValueInp
+  getDefValueInp,
+  PopupRenderLoading
 } from '../components/modal.js';
 
 import {
   addsElementCard,
-  renderCard
+  removeCard,
+  addsLikeCads,
+  changeLike
 } from '../components/card.js';
 
 let userId = '';
 
-getInitialData()
-  .then(([users, cards]) => {
-    profileName.textContent = users.name;
-    profileActivity.textContent = users.about;
-    linkImg.src = users.avatar;
-    userId = users._id;
+// проверка поставлен ли лайк в карточке и в зависимости от
+// полученного ответа удаляет/добавляет информацию на сервер.
+// Следит за счётчиком лайков
+const switchLikeCard = (event) => {
+  let methodToggle = '';
+  const element = event.target.closest('.element');
+  const btnLike = element.querySelector('.element__btn-like');
+  const id = element.dataset.cardId;
+  const likeStatus = event.target.classList.contains('element__btn-like_active')
 
-    cards.forEach((card) => {
-      elementsCards.append(addsElementCard(card));
+  !likeStatus ? methodToggle = 'PUT' : methodToggle = 'DELETE';
+  putLikeCard(id, methodToggle)
+    .then((card) => {
+      addsLikeCads(btnLike);
+      changeLike(element, card.likes.length);
     })
-  })
-  .catch((err) => isRejected(err));
+    .catch((err) => isRejected(err));
+}
 
 const submitProfileForm = (event) => {
   event.preventDefault();
+  PopupRenderLoading(formProfile, true);
 
   const valueName = nameInput.value;
   const valueJob = jobInput.value;
@@ -71,34 +90,45 @@ const submitProfileForm = (event) => {
 
       closePopup(formProfile);
     })
-    .catch((err) => isRejected(err));
-
+    .catch((err) => isRejected(err))
+    .finally(() => PopupRenderLoading(formProfile, false));
 }
 
 const submitCardsForm = (event) => {
   event.preventDefault();
+  PopupRenderLoading(formCard, true);
 
   const nameImgInput = formCard.querySelector('input[name = name_img]');
   const linkInput = formCard.querySelector('input[name = url_img]');
 
   setNewCard(nameImgInput.value, linkInput.value)
     .then((card) => {
-      elementsCards.prepend(addsElementCard(card));
+      elementsCards.prepend(addsElementCard(userId, card, switchLikeCard));
       closePopup(formCard);
     })
     .catch((err) => isRejected(err))
-    .finally(() => formCard.reset());
+    .finally(() => {
+      PopupRenderLoading(formCard, false);
+      formCard.reset();
+    });
 }
 
 const submitAvatarForm = (event) => {
   event.preventDefault();
+  PopupRenderLoading(formAvatar, true);
 
   const avatarInput = formAvatar.querySelector('input[name = url_avatar]');
 
-  linkImg.src = avatarInput.value;
-
-  closePopup(formAvatar);
-  formAvatar.reset();
+  setProfileAvatar(avatarInput.value)
+    .then((profile) => {
+      linkImg.src = profile.avatar;
+      closePopup(formAvatar);
+    })
+    .catch((err) => isRejected(err))
+    .finally(() => {
+      PopupRenderLoading(formAvatar, false);
+      formAvatar.reset();
+    });
 }
 
 export const closeOnEsc = (evt) => {
@@ -107,10 +137,24 @@ export const closeOnEsc = (evt) => {
     closePopup(popupActive);
   }
 }
+// получение данных пользователя при загрузки страницы
+getInitialData()
+  .then(([user, cards]) => {
+    profileName.textContent = user.name;
+    profileActivity.textContent = user.about;
+    linkImg.src = user.avatar;
+    userId = user._id;
+    cards.forEach((card) => {
+      elementsCards.append(addsElementCard(userId, card, switchLikeCard));
+    })
+  })
+  .catch((err) => isRejected(err));
 
+// включение валидации
 enableValidation(listSettings);
 
 profileButtonEdit.addEventListener('click', () => {
+  PopupRenderLoading(formProfile, true);
   resetFormInput(formProfile, listSettings);
   openPopup(popupEditProfile);
   getDefValueInp(profileName, nameInput);
@@ -118,11 +162,13 @@ profileButtonEdit.addEventListener('click', () => {
 });
 
 profileBtnAddCards.addEventListener('click', () => {
+  PopupRenderLoading(formCard, true);
   resetFormInput(formCard, listSettings);
   openPopup(popupAddCards);
 });
 
 profileBtnEditAvatar.addEventListener('click', () => {
+  PopupRenderLoading(formAvatar, true);
   resetFormInput(formAvatar, listSettings);
   openPopup(popupEditAvatar);
 });
@@ -140,3 +186,15 @@ popupButtonsLeave.forEach((item) => {
 formProfile.addEventListener('submit', submitProfileForm);
 formCard.addEventListener('submit', submitCardsForm);
 formAvatar.addEventListener('submit', submitAvatarForm);
+
+btnRemoveCard.addEventListener('click', () => {
+  const id = popupRemoveCard.dataset.id
+  const element = elementsCards.querySelector(`[data-card-id = '${id}']`);
+
+  promiseCardDelete(id)
+    .then(() => {
+      removeCard(element)
+      closePopup(btnRemoveCard)
+    })
+    .catch((err) => isRejected(err));
+});

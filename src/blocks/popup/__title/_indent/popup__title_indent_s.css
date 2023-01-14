@@ -1,0 +1,9 @@
+.popup__title_indent_s {
+  padding-bottom: 20px;
+}
+
+@media screen and (min-width: 657px) {
+  .popup__title_indent_s {
+    padding-bottom: 10px;
+  }
+}
