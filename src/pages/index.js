@@ -171,7 +171,6 @@ profileButtonEdit.addEventListener('click', () => {
   getDefaultValueInput(profileName, nameInput);
   getDefaultValueInput(profileActivity, jobInput);
   PopupRenderLoading(formProfile, true);
-  resetFormInput(formProfile, listSettings);
   openPopup(popupEditProfile);
 });
 
