@@ -1,4 +1,14 @@
+import { popupRemoveCard } from './constants';
+
 import { closeOnEsc } from '../pages/index.js';
+
+// открывает модальное окно для подтверждения удаления картинки
+const openPopupDeleteCard = (modalWindow) => {
+  const element = modalWindow.target.closest('.element');
+  popupRemoveCard.dataset.id = element.dataset.cardId;
+
+  openPopup(popupRemoveCard);
+}
 
 const openPopup = (modalWindow) => {
   const popupElement = modalWindow.classList;
@@ -17,5 +27,16 @@ const closePopup = (modalWindow) => {
 const getDefValueInp = (classText, classInput) => {
   classInput.value = classText.textContent;
 }
+// в зависимости от принятого состояния меняет текст в кнопке при загрузки данных на сервер
+const PopupRenderLoading = (modalWindow, isLoading) => {
+  const btnAcept = modalWindow.querySelector('.popup__btn-accept');
+  isLoading ? btnAcept.textContent = 'Создать': btnAcept.textContent = 'Создание...';
+}
 
-export { openPopup, closePopup, getDefValueInp };
+export {
+  openPopupDeleteCard,
+  openPopup,
+  closePopup,
+  getDefValueInp,
+  PopupRenderLoading
+}
