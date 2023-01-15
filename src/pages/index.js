@@ -8,7 +8,7 @@ import {
   setNewCard,
   setProfileAvatar,
   putLikeCard,
-  CardDelete
+  cardDelete
 } from '../components/api.js';
 
 import {
@@ -46,11 +46,11 @@ import {
   openPopup,
   closePopup,
   getDefaultValueInput,
-  PopupRenderLoading
+  popupRenderLoading
 } from '../components/modal.js';
 
 import {
-  CreateCard,
+  createCard,
   deleteCardFromPage,
   addsLikeCads,
   changeLike
@@ -81,7 +81,7 @@ const deleteCardFromServer = () => {
   const id = popupRemoveCard.dataset.id
   const element = elementsCards.querySelector(`[data-card-id = '${id}']`);
 
-  CardDelete(id)
+  cardDelete(id)
     .then(() => {
       deleteCardFromPage(element)
       closePopup(btnRemoveCard)
@@ -91,7 +91,7 @@ const deleteCardFromServer = () => {
 
 const submitProfileForm = (event) => {
   event.preventDefault();
-  PopupRenderLoading(formProfile, true);
+  popupRenderLoading(formProfile, true);
 
   const valueName = nameInput.value;
   const valueJob = jobInput.value;
@@ -104,31 +104,31 @@ const submitProfileForm = (event) => {
       closePopup(formProfile);
     })
     .catch((err) => isRejected(err))
-    .finally(() => PopupRenderLoading(formProfile, false));
+    .finally(() => popupRenderLoading(formProfile, false));
 }
 
 const submitCardsForm = (event) => {
   event.preventDefault();
-  PopupRenderLoading(formCard, true);
+  popupRenderLoading(formCard, true);
 
   const nameImgInput = formCard.querySelector('input[name = name_img]');
   const linkInput = formCard.querySelector('input[name = url_img]');
 
   setNewCard(nameImgInput.value, linkInput.value)
     .then((card) => {
-      elementsCards.prepend(CreateCard(userId, card, switchLikeCard));
+      elementsCards.prepend(createCard(userId, card, switchLikeCard));
       closePopup(formCard);
     })
     .catch((err) => isRejected(err))
     .finally(() => {
-      PopupRenderLoading(formCard, false);
+      popupRenderLoading(formCard, false);
       formCard.reset();
     });
 }
 
 const submitAvatarForm = (event) => {
   event.preventDefault();
-  PopupRenderLoading(formAvatar, true);
+  popupRenderLoading(formAvatar, true);
 
   const avatarInput = formAvatar.querySelector('input[name = url_avatar]');
 
@@ -139,7 +139,7 @@ const submitAvatarForm = (event) => {
     })
     .catch((err) => isRejected(err))
     .finally(() => {
-      PopupRenderLoading(formAvatar, false);
+      popupRenderLoading(formAvatar, false);
       formAvatar.reset();
     });
 }
@@ -159,7 +159,7 @@ Promise.all([getInitialProfile(), getInitialCards()])
     linkImg.src = user.avatar;
     userId = user._id;
     cards.forEach((card) => {
-      elementsCards.append(CreateCard(userId, card, switchLikeCard));
+      elementsCards.append(createCard(userId, card, switchLikeCard));
     })
   })
   .catch((err) => isRejected(err));
@@ -170,18 +170,15 @@ enableValidation(listSettings);
 profileButtonEdit.addEventListener('click', () => {
   getDefaultValueInput(profileName, nameInput);
   getDefaultValueInput(profileActivity, jobInput);
-  PopupRenderLoading(formProfile, true);
   openPopup(popupEditProfile);
 });
 
 profileBtnAddCards.addEventListener('click', () => {
-  PopupRenderLoading(formCard, true);
   resetFormInput(formCard, listSettings);
   openPopup(popupAddCards);
 });
 
 profileBtnEditAvatar.addEventListener('click', () => {
-  PopupRenderLoading(formAvatar, true);
   resetFormInput(formAvatar, listSettings);
   openPopup(popupEditAvatar);
 });

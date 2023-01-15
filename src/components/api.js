@@ -69,7 +69,7 @@ const setProfileAvatar = (link) => {
     .then(res => isResponse(res));
 }
 
-const CardDelete = (cardId) => {
+const cardDelete = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers
@@ -93,5 +93,5 @@ export {
   setNewCard,
   setProfileAvatar,
   putLikeCard,
-  CardDelete
+  cardDelete
 }
