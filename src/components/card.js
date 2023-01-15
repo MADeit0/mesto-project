@@ -28,7 +28,7 @@ const showImgCard = (event) => {
 }
 // инициализация карточки, добавление слушателей, добавление маркера лайка если
 // лайк был поставлен ранее, добавление информации о количестве поставленных лайков
-const CreateCard = (myId, elementsCard, likeCardCallback) => {
+const createCard = (myId, elementsCard, likeCardCallback) => {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
   const cardLike = cardElement.querySelector('.element__btn-like');
@@ -63,4 +63,4 @@ const CreateCard = (myId, elementsCard, likeCardCallback) => {
   return cardElement;
 }
 
-export { CreateCard, deleteCardFromPage, addsLikeCads, changeLike }
+export { createCard, deleteCardFromPage, addsLikeCads, changeLike }

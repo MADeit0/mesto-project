@@ -28,9 +28,9 @@ const getDefaultValueInput = (classText, classInput) => {
   classInput.value = classText.textContent;
 }
 // в зависимости от принятого состояния меняет текст в кнопке при загрузки данных на сервер
-const PopupRenderLoading = (modalWindow, isLoading) => {
+const popupRenderLoading = (modalWindow, isLoading) => {
   const btnAcept = modalWindow.querySelector('.popup__btn-accept');
-  isLoading ? btnAcept.textContent = 'Создать': btnAcept.textContent = 'Создание...';
+  isLoading ? btnAcept.textContent = btnAcept.dataset.loaded : btnAcept.textContent = btnAcept.dataset.initial;
 }
 
 export {
@@ -38,5 +38,5 @@ export {
   openPopup,
   closePopup,
   getDefaultValueInput,
-  PopupRenderLoading
+  popupRenderLoading
 }
