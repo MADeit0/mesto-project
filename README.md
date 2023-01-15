@@ -1,5 +1,10 @@
 # Проект: Mesto
 
+## Ссылка GitHub Pages
+
+ [Mesto-project](https://madeit0.github.io/mesto-project/ "Место")
+
+
 ## Описание
 ---
 
@@ -15,9 +20,8 @@
 
 ## О проекте
 ---
- ### HTML CSS
-- Ссылка на страницу [клик!](https://madeit0.github.io/mesto-project/ "Место")
 
+ ### HTML CSS
 - Страница сайта полностью адаптивна под разрешение экранов с шириной в диапазоне 320...1280px.
 
 - Адаптивность сделана при помощи (media query).
