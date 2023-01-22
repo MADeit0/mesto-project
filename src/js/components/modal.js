@@ -1,6 +1,6 @@
-import { popupRemoveCard } from './constants';
+import { popupRemoveCard } from '../utils/constants';
 
-import { closeOnEsc } from '../pages/index.js';
+import { closeOnEsc } from '../../pages/index.js';
 
 // открывает модальное окно для подтверждения удаления картинки
 const openPopupDeleteCard = (modalWindow) => {

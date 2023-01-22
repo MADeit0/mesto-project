@@ -1,4 +1,4 @@
-import { cohortId, token } from './constants';
+import { cohortId, token } from '../utils/constants';
 
 const config = {
   baseUrl: `https://nomoreparties.co/v1/${cohortId}`,

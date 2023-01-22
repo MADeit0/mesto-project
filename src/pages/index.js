@@ -9,7 +9,7 @@ import {
   setProfileAvatar,
   putLikeCard,
   cardDelete
-} from '../components/api.js';
+} from '../js/components/api.js';
 
 import {
   keyboardBtn,
@@ -31,30 +31,30 @@ import {
   elementsCards,
   nameInput,
   jobInput,
-} from '../components/constants.js';
+} from '../js/utils/constants.js';
 
 import {
   listSettings
-} from '../components/constants.js';
+} from '../js/utils/constants.js';
 
 import {
   enableValidation,
   resetFormInput
-} from '../components/validate.js';
+} from '../js/components/validate.js';
 
 import {
   openPopup,
   closePopup,
   getDefaultValueInput,
   popupRenderLoading
-} from '../components/modal.js';
+} from '../js/components/modal.js';
 
 import {
   createCard,
   deleteCardFromPage,
   addsLikeCads,
   changeLike
-} from '../components/card.js';
+} from '../js/components/card.js';
 
 let userId = '';
 

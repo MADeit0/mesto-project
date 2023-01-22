@@ -1,4 +1,4 @@
-import { popupShowImg, cardTemplate } from './constants';
+import { popupShowImg, cardTemplate } from '../utils/constants';
 
 import { openPopupDeleteCard, openPopup } from './modal.js';
 
