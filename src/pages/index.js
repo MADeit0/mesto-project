@@ -1,4 +1,4 @@
-import './index.css';
+import "./index.css";
 
 // import {
 //   getInitialProfile,
@@ -199,9 +199,7 @@ import './index.css';
 // formCard.addEventListener('submit', submitCardsForm);
 // formAvatar.addEventListener('submit', submitAvatarForm);
 
-
 import {
-
   popupEditProfile,
   profileButtonEdit,
 
@@ -218,15 +216,14 @@ import {
   // elementsCards,
   // nameInput,
   // jobInput,
-} from '../js/utils/constants.js';
+} from "../js/utils/constants.js";
 
-import PopupWithForm from '../js/components/PopupWithForm.js';
-
+import PopupWithForm from "../js/components/PopupWithForm.js";
 
 const popupEdit = new PopupWithForm(popupEditProfile);
 
-profileButtonEdit.addEventListener('click', () => {
+profileButtonEdit.addEventListener("click", () => {
   popupEdit.open();
-  popupEdit._getInputValues()
-  popupEdit.setEventListeners()
+  popupEdit._getInputValues();
+  popupEdit.setEventListeners();
 });
