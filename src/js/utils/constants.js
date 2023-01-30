@@ -5,7 +5,7 @@ export const keyboardBtn = 'Escape';
 
 export const cardTemplate = document.querySelector('#tmp-card').content;
 
-export const popupEditProfile = document.querySelector('.popup_edit-profile');
+export const popupEditProfile = '.popup_edit-profile';
 export const popupAddCards = document.querySelector('.popup_add-cards');
 export const popupEditAvatar = document.querySelector('.popup_edit-avatar');
 export const popupRemoveCard = document.querySelector('.popup_remove-card');

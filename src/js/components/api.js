@@ -77,10 +77,10 @@ export default class Api {
   }
 }
 
-const api = new Api({
-  baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
-  headers: {
-    authorization: token,
-    "Content-Type": "application/json",
-  },
-});
+// const api = new Api({
+//   baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
+//   headers: {
+//     authorization: token,
+//     "Content-Type": "application/json",
+//   },
+// });
