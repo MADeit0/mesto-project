@@ -33,9 +33,7 @@ import "./index.css";
 //   jobInput,
 // } from '../js/utils/constants.js';
 
-// import {
-//   listSettings
-// } from '../js/utils/constants.js';
+
 
 // import {
 //   enableValidation,
@@ -218,6 +216,10 @@ import {
   // jobInput,
 } from "../js/utils/constants.js";
 
+import {
+  listSettings
+} from '../js/utils/constants.js';
+
 import PopupWithForm from "../js/components/PopupWithForm.js";
 
 const popupEdit = new PopupWithForm(popupEditProfile);
@@ -227,3 +229,11 @@ profileButtonEdit.addEventListener("click", () => {
   popupEdit._getInputValues();
   popupEdit.setEventListeners();
 });
+
+
+
+
+import FormValidator from '../js/components/FormValidator.js';
+
+const validEditProfile = new FormValidator(listSettings, popupEditProfile)
+validEditProfile.enableValidation();
