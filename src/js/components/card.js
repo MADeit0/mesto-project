@@ -1,5 +1,5 @@
 export default class card {
-  constructor(myId, { _id, name, link, likes, owner }, cardTemplate,_likeCallback,_showImgCallback,_DeleteCardCalback) {
+  constructor(myId, { _id, name , link, likes , owner }, cardTemplate,likeCallback,showImgCallback,DeleteCardCalback) {
     this._myId = myId;
     this._id = _id;
     this._name = name;
@@ -7,9 +7,9 @@ export default class card {
     this._likes = likes;
     this._cardTemplate = cardTemplate;
     this._owner = owner;
-    this._likeCallback = _likeCallback
-    this._showImgCallback = _showImgCallback
-    this._DeleteCardCalback = _DeleteCardCalback;
+    this._likeCallback = likeCallback;
+    this._showImgCallback = showImgCallback;
+    this._DeleteCardCalback = DeleteCardCalback;
   }
 
   _addsLike() {
