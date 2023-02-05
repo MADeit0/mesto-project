@@ -33,8 +33,6 @@ import "./index.css";
 //   jobInput,
 // } from '../js/utils/constants.js';
 
-
-
 // import {
 //   enableValidation,
 //   resetFormInput
@@ -217,9 +215,7 @@ import {
   // jobInput,
 } from "../js/utils/constants.js";
 
-import {
-  listSettings
-} from '../js/utils/constants.js';
+import { listSettings } from "../js/utils/constants.js";
 
 import PopupWithForm from "../js/components/PopupWithForm.js";
 
@@ -231,14 +227,10 @@ profileButtonEdit.addEventListener("click", () => {
   popupEdit.setEventListeners();
 });
 
+import FormValidator from "../js/components/FormValidator.js";
 
-import FormValidator from '../js/components/FormValidator.js';
-
-const validEditProfile = new FormValidator(listSettings, popupEditProfile)
+const validEditProfile = new FormValidator(listSettings, popupEditProfile);
 validEditProfile.enableValidation();
-
-
-
 
 // -------------------------------------------------------------------------
 
@@ -247,9 +239,8 @@ import UserInfo from "../js/components/UserInfo.js";
 const userInfo = new UserInfo(profileName, profileActivity, linkImg);
 
 // -------------------------------------------------------------------------
-import Api from '../js/components/Api.js';
+import Api from "../js/components/Api.js";
 import { cohortId, token } from "../js/utils/constants.js";
-
 
 const api = new Api({
   baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
@@ -264,7 +255,7 @@ import Card from "../js/components/Card.js";
 
 // --------------------------------------------------------------------------
 
-let userId = '';
+let userId = "";
 
 // получение данных пользователя при загрузки страницы
 Promise.all([api.getInitialProfile(), api.getInitialCards()])
@@ -273,45 +264,40 @@ Promise.all([api.getInitialProfile(), api.getInitialCards()])
     userInfo.setUserInfo(user);
     userInfo.setAvatar(user);
 
-    const section = new Section({
-      items: cards,
-      renderer: (item) => {
-        const cardElement = initialCard(item).createCard();
-        section.addItemAppend(cardElement);
-      }
-    }, elementsCards);
+    const section = new Section(
+      {
+        items: cards,
+        renderer: (item) => {
+          const cardElement = initialCard(item).createCard();
+          section.addItemAppend(cardElement);
+        },
+      },
+      elementsCards
+    );
 
     section.renderItems();
   })
   .catch((err) => api.isRejected(err));
 
-  // создаём карточку, добавляем логику в слушатели
+// создаём карточку, добавляем логику в слушатели
 function initialCard(cardList) {
-  const card = new Card(
-    userId,
-    cardList,
-    cardTemplate,
-    {
-      likeCallback: (id, containsLike) => {
-        (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
-          .then((likeState) => {
-            card.changeLikeState(likeState);
-          })
-          .catch((err) => api.isRejected(err));
-      },
-      deleteCardCallback: (event) => {
-        const element = event.target.closest('.element');
-        const id = element.dataset.cardId;
-        api.cardDelete(id)
-          .then((res) => {
-            card.deleteCard();
-          })
-          .catch((err) => api.isRejected(err));
-      }
-    });
+  const card = new Card(userId, cardList, cardTemplate, {
+    likeCallback: (id, containsLike) => {
+      (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
+        .then((likeState) => {
+          card.changeLikeState(likeState);
+        })
+        .catch((err) => api.isRejected(err));
+    },
+    deleteCardCallback: (ElementId) => {
+      api
+        .cardDelete(ElementId)
+        .then((res) => {
+          card.deleteCard();
+        })
+        .catch((err) => api.isRejected(err));
+    },
+  });
 
-  return card
+  return card;
 }
-
-
-

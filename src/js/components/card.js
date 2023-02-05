@@ -1,5 +1,10 @@
 export default class Card {
-  constructor(myId, { _id, name, link, likes, owner }, cardTemplate, { likeCallback,/*showImgCallback,*/deleteCardCallback }) {
+  constructor(
+    myId,
+    { _id, name, link, likes, owner },
+    cardTemplate,
+    { likeCallback, /*showImgCallback,*/ deleteCardCallback }
+  ) {
     this._myId = myId;
     this._id = _id;
     this._name = name;
@@ -43,7 +48,7 @@ export default class Card {
     } else {
       this._removesLike();
     }
-    this._changeLike()
+    this._changeLike();
   }
 
   changeLikeState({ likes }) {
@@ -79,13 +84,16 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._cardLike.addEventListener("click", () => { this._likeCallback(this._id, this._containsLike()) });
+    this._cardLike.addEventListener("click", () => {
+      this._likeCallback(this._id, this._containsLike());
+    });
     //   this._cardImage.addEventListener("click", this._showImgCallback.bind(this));
-    this._cardRemove.addEventListener("click", this._deleteCardCallback.bind(this));
+    this._cardRemove.addEventListener("click", () => {
+      this._deleteCardCallback(this._id);
+    });
   }
 
   deleteCard() {
     this._element.remove();
   }
-
 }
