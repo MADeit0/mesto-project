@@ -198,35 +198,60 @@ import "./index.css";
 import {
   popupEditProfile,
   profileButtonEdit,
-
   // popupButtonsLeave,
-  // profileBtnAddCards,
-  // profileBtnEditAvatar,
+  profileBtnAddCards,
+  profileBtnEditAvatar,
   // btnRemoveCard,
   // formProfile,
   // formCard,
   // formAvatar,
   cardTemplate,
+  popupShowImg,
+  popupRemoveCard,
+  popupAddCards,
   profileName,
   profileActivity,
   linkImg,
   elementsCards,
+  popupEditAvatar,
   // nameInput,
   // jobInput,
 } from "../js/utils/constants.js";
 
 import { listSettings } from "../js/utils/constants.js";
 
+// -----------------------------------------------------------------------
 import PopupWithForm from "../js/components/PopupWithForm.js";
+import PopupWithImage from "../js/components/PopupWithImage.js";
+import PopupWithDeleteCard from "../js/components/PopupWithDeleteCard.js";
 
+const popupAvatarEdit = new PopupWithForm(popupEditAvatar);
 const popupEdit = new PopupWithForm(popupEditProfile);
+const popupImage = new PopupWithImage(popupShowImg);
+const popupAddNewCard = new PopupWithForm(popupAddCards);
+const popupDisposeCard = new PopupWithForm(popupRemoveCard);
+
+profileBtnEditAvatar.addEventListener("click", () => {
+  popupAvatarEdit.open();
+  popupAvatarEdit._getInputValues();
+  popupAvatarEdit.setEventListeners();
+});
+
+profileBtnAddCards.addEventListener("click", () => {
+  popupAddNewCard.open();
+  popupAddNewCard._getInputValues();
+});
 
 profileButtonEdit.addEventListener("click", () => {
   popupEdit.open();
   popupEdit._getInputValues();
-  popupEdit.setEventListeners();
 });
 
+popupImage.setEventListeners();
+popupEdit.setEventListeners();
+popupAddNewCard.setEventListeners();
+popupDisposeCard.setEventListeners();
+// ------------------------------------------------------------------------
 import FormValidator from "../js/components/FormValidator.js";
 
 const validEditProfile = new FormValidator(listSettings, popupEditProfile);
@@ -288,6 +313,9 @@ function initialCard(cardList) {
           card.changeLikeState(likeState);
         })
         .catch((err) => api.isRejected(err));
+    },
+    showImgCallback: (name, link) => {
+      popupImage.open(name, link);
     },
     deleteCardCallback: (ElementId) => {
       api

@@ -3,7 +3,7 @@ export default class Card {
     myId,
     { _id, name, link, likes, owner },
     cardTemplate,
-    { likeCallback, /*showImgCallback,*/ deleteCardCallback }
+    { likeCallback, showImgCallback, deleteCardCallback }
   ) {
     this._myId = myId;
     this._id = _id;
@@ -13,7 +13,7 @@ export default class Card {
     this._cardTemplate = cardTemplate;
     this._owner = owner;
     this._likeCallback = likeCallback;
-    // this._showImgCallback = showImgCallback;
+    this._showImgCallback = showImgCallback;
     this._deleteCardCallback = deleteCardCallback;
   }
 
@@ -87,7 +87,9 @@ export default class Card {
     this._cardLike.addEventListener("click", () => {
       this._likeCallback(this._id, this._containsLike());
     });
-    //   this._cardImage.addEventListener("click", this._showImgCallback.bind(this));
+    this._cardImage.addEventListener("click", () =>
+      this._showImgCallback(this._name, this._link)
+    );
     this._cardRemove.addEventListener("click", () => {
       this._deleteCardCallback(this._id);
     });
