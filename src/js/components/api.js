@@ -67,10 +67,19 @@ export default class Api {
     }).then((res) => this._isResponse(res));
   }
 
-  putLikeCard(cardId, methodToggle) {
+  putLikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: methodToggle,
+      method: 'PUT',
+      headers: this._headers,
+    }).then((res) => this._isResponse(res));
+  }
+
+  removeLikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
       headers: this._headers,
     }).then((res) => this._isResponse(res));
   }
 }
+
+

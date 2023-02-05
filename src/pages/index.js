@@ -48,7 +48,7 @@ import "./index.css";
 // } from '../js/components/modal.js';
 
 // import {
-//   createCard,
+//   initialCard,
 //   deleteCardFromPage,
 //   addsLikeCads,
 //   changeLike
@@ -114,7 +114,7 @@ import "./index.css";
 
 //   setNewCard(nameImgInput.value, linkInput.value)
 //     .then((card) => {
-//       elementsCards.prepend(createCard(userId, card, switchLikeCard));
+//       elementsCards.prepend(initialCard(userId, card, switchLikeCard));
 //       closePopup(formCard);
 //     })
 //     .catch((err) => isRejected(err))
@@ -157,7 +157,7 @@ import "./index.css";
 //     linkImg.src = user.avatar;
 //     userId = user._id;
 //     cards.forEach((card) => {
-//       elementsCards.append(createCard(userId, card, switchLikeCard));
+//       elementsCards.append(initialCard(userId, card, switchLikeCard));
 //     })
 //   })
 //   .catch((err) => isRejected(err));
@@ -273,45 +273,45 @@ Promise.all([api.getInitialProfile(), api.getInitialCards()])
     userInfo.setUserInfo(user);
     userInfo.setAvatar(user);
 
-  const section = new Section({
-    items: cards,
-    renderer: (item) => {
-      const card = new Card(userId, item, cardTemplate, {
-        likeCallback: (event) => {
-          let methodToggle = '';
-          const element = event.target.closest('.element');
-          const id = element.dataset.cardId;
-          const likeStatus = event.target.classList.contains('element__btn-like_active')
+    const section = new Section({
+      items: cards,
+      renderer: (item) => {
+        const cardElement = initialCard(item).createCard();
+        section.addItemAppend(cardElement);
+      }
+    }, elementsCards);
 
-          !likeStatus ? methodToggle = 'PUT' : methodToggle = 'DELETE';
-          api.putLikeCard(id, methodToggle)
-            .then((likeState) => {
-              card.changeLikeState(likeState);
-            })
-            .catch((err) => api.isRejected(err));
-        },
-        deleteCardCallback: (event) => {
-          const element = event.target.closest('.element');
-          const id = element.dataset.cardId;
-          api.cardDelete(id)
-          .then((res) => {
-            card.delete();
-          })
-          .catch((err) => api.isRejected(err));
-        }
-      });
-
-      const cardElement = card.create();
-      section.addItemAppend(cardElement);
-    }}, elementsCards );
     section.renderItems();
   })
   .catch((err) => api.isRejected(err));
 
+  // создаём карточку, добавляем логику в слушатели
+function initialCard(cardList) {
+  const card = new Card(
+    userId,
+    cardList,
+    cardTemplate,
+    {
+      likeCallback: (id, containsLike) => {
+        (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
+          .then((likeState) => {
+            card.changeLikeState(likeState);
+          })
+          .catch((err) => api.isRejected(err));
+      },
+      deleteCardCallback: (event) => {
+        const element = event.target.closest('.element');
+        const id = element.dataset.cardId;
+        api.cardDelete(id)
+          .then((res) => {
+            card.deleteCard();
+          })
+          .catch((err) => api.isRejected(err));
+      }
+    });
 
-
-
-
+  return card
+}
 
 
 
