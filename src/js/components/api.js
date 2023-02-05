@@ -1,5 +1,3 @@
-import { cohortId, token } from "../utils/constants";
-
 export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -76,11 +74,3 @@ export default class Api {
     }).then((res) => this._isResponse(res));
   }
 }
-
-// const api = new Api({
-//   baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
-//   headers: {
-//     authorization: token,
-//     "Content-Type": "application/json",
-//   },
-// });

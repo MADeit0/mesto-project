@@ -3,7 +3,7 @@ export const token = '7385ede6-107c-4a27-9028-b467b4c4382e';
 
 export const keyboardBtn = 'Escape';
 
-export const cardTemplate = document.querySelector('#tmp-card').content;
+export const cardTemplate = '#tmp-card';
 
 export const popupEditProfile = '.popup_edit-profile';
 export const popupAddCards = document.querySelector('.popup_add-cards');
@@ -21,11 +21,11 @@ export const formProfile = document.querySelector('form[name = profile_data]');
 export const formCard = document.querySelector('form[name = add_img_data]');
 export const formAvatar = document.querySelector('form[name = add_avatar_data]');
 
-export const profileName = document.querySelector('.profile__name');
-export const profileActivity = document.querySelector('.profile__activity');
-export const linkImg = document.querySelector('.profile__avatar-img');
+export const profileName = '.profile__name';
+export const profileActivity = '.profile__activity';
+export const linkImg = '.profile__avatar-img';
 
-export const elementsCards = document.querySelector('.elements');
+export const elementsCards = '.elements';
 export const popupShowImg = document.querySelector('.popup_show-img');
 
 export const nameInput = formProfile.querySelector('input[name = first-name]');

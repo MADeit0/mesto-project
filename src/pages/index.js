@@ -208,10 +208,11 @@ import {
   // formProfile,
   // formCard,
   // formAvatar,
-  // profileName,
-  // profileActivity,
-  // linkImg,
-  // elementsCards,
+  cardTemplate,
+  profileName,
+  profileActivity,
+  linkImg,
+  elementsCards,
   // nameInput,
   // jobInput,
 } from "../js/utils/constants.js";
@@ -231,9 +232,86 @@ profileButtonEdit.addEventListener("click", () => {
 });
 
 
-
-
 import FormValidator from '../js/components/FormValidator.js';
 
 const validEditProfile = new FormValidator(listSettings, popupEditProfile)
 validEditProfile.enableValidation();
+
+
+
+
+// -------------------------------------------------------------------------
+
+import UserInfo from "../js/components/UserInfo.js";
+
+const userInfo = new UserInfo(profileName, profileActivity, linkImg);
+
+// -------------------------------------------------------------------------
+import Api from '../js/components/Api.js';
+import { cohortId, token } from "../js/utils/constants.js";
+
+
+const api = new Api({
+  baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
+  headers: {
+    authorization: token,
+    "Content-Type": "application/json",
+  },
+});
+// -------------------------------------------------------------------------
+import Section from "../js/components/Section.js";
+import Card from "../js/components/Card.js";
+
+// --------------------------------------------------------------------------
+
+let userId = '';
+
+// получение данных пользователя при загрузки страницы
+Promise.all([api.getInitialProfile(), api.getInitialCards()])
+  .then(([user, cards]) => {
+    userId = user._id;
+    userInfo.setUserInfo(user);
+    userInfo.setAvatar(user);
+
+  const section = new Section({
+    items: cards,
+    renderer: (item) => {
+      const card = new Card(userId, item, cardTemplate, {
+        likeCallback: (event) => {
+          let methodToggle = '';
+          const element = event.target.closest('.element');
+          const id = element.dataset.cardId;
+          const likeStatus = event.target.classList.contains('element__btn-like_active')
+
+          !likeStatus ? methodToggle = 'PUT' : methodToggle = 'DELETE';
+          api.putLikeCard(id, methodToggle)
+            .then((likeState) => {
+              card.changeLikeState(likeState);
+            })
+            .catch((err) => api.isRejected(err));
+        },
+        deleteCardCallback: (event) => {
+          const element = event.target.closest('.element');
+          const id = element.dataset.cardId;
+          api.cardDelete(id)
+          .then((res) => {
+            card.delete();
+          })
+          .catch((err) => api.isRejected(err));
+        }
+      });
+
+      const cardElement = card.create();
+      section.addItemAppend(cardElement);
+    }}, elementsCards );
+    section.renderItems();
+  })
+  .catch((err) => api.isRejected(err));
+
+
+
+
+
+
+
+

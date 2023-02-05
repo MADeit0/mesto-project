@@ -1,5 +1,5 @@
-export default class card {
-  constructor(myId, { _id, name , link, likes , owner }, cardTemplate,likeCallback,showImgCallback,DeleteCardCalback) {
+export default class Card {
+  constructor(myId, { _id, name , link, likes , owner }, cardTemplate, {likeCallback,/*showImgCallback,*/deleteCardCallback}) {
     this._myId = myId;
     this._id = _id;
     this._name = name;
@@ -8,8 +8,8 @@ export default class card {
     this._cardTemplate = cardTemplate;
     this._owner = owner;
     this._likeCallback = likeCallback;
-    this._showImgCallback = showImgCallback;
-    this._DeleteCardCalback = DeleteCardCalback;
+    // this._showImgCallback = showImgCallback;
+    this._deleteCardCallback = deleteCardCallback;
   }
 
   _addsLike() {
@@ -30,7 +30,7 @@ export default class card {
   }
 
   _getLikeInfo() {
-    this._likes.some((likes) => likes._id === this._myId);
+    return this._likes.some((likes) => likes._id === this._myId);
   }
 
   _isLiked() {
@@ -44,16 +44,16 @@ export default class card {
 
   changeLikeState({likes}) {
     this._likes = likes;
-    this._getLikeInfo() = !this._getLikeInfo();
+    !this._getLikeInfo();
     this._isLiked();
   }
 
-  _changeLike({likes}) {
-    this._likesCount.textContent = likes.length;
+  _changeLike() {
+    this._likesCount.textContent = this._likes.length;
   }
 
   create() {
-    this._element = this._getElement;
+    this._element = this._getElement();
     this._cardLike = this._element.querySelector(".element__btn-like");
     this._cardRemove = this._element.querySelector(".element__btn-remove");
     this._cardImage = this._element.querySelector(".element__image");
@@ -63,12 +63,11 @@ export default class card {
     this._cardImage.alt = this._name;
     this._cardImage.src = this._link;
     this._cardTitle.textContent = this._name;
-    this._likesCount.textContent = this._likes.length;
     this._element.dataset.cardId = this._id;
 
     this._isLiked();
     this._setEventListeners();
-    if (myId !== this._owner._id) {
+    if (this._myId !== this._owner._id) {
       this._cardRemove.remove();
     }
 
@@ -77,7 +76,12 @@ export default class card {
 
   _setEventListeners() {
     this._cardLike.addEventListener("click", this._likeCallback.bind(this));
-    this._cardImage.addEventListener("click", this._showImgCallback.bind(this));
-    this._cardRemove.addEventListener("click", this._DeleteCardCalback.bind(this));
+  //   this._cardImage.addEventListener("click", this._showImgCallback.bind(this));
+    this._cardRemove.addEventListener("click", this._deleteCardCallback.bind(this));
   }
+
+  delete() {
+    this._element.remove();
+  }
+
 }
