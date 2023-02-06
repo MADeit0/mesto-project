@@ -214,8 +214,8 @@ import {
   linkImg,
   elementsCards,
   popupEditAvatar,
-  // nameInput,
-  // jobInput,
+  nameInput,
+  jobInput,
 } from "../js/utils/constants.js";
 
 import { listSettings } from "../js/utils/constants.js";
@@ -225,8 +225,19 @@ import PopupWithForm from "../js/components/PopupWithForm.js";
 import PopupWithImage from "../js/components/PopupWithImage.js";
 import PopupWithDeleteCard from "../js/components/PopupWithDeleteCard.js";
 
-// const popupEdit = new PopupWithForm(popupEditProfile);
 const popupImage = new PopupWithImage(popupShowImg);
+
+const popupEdit = new PopupWithForm(popupEditProfile, {
+  submitForm: ({ first_name, activity }) => {
+    api
+      .setProfileData(first_name, activity)
+      .then((profile) => {
+        userInfo.setUserInfo(profile);
+        popupEdit.close();
+      })
+      .catch((err) => api.isRejected(err));
+  },
+});
 
 const popupAddNewCard = new PopupWithForm(popupAddCards, {
   submitForm: ({ name_img, url_img }) => {
@@ -267,22 +278,21 @@ const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard, {
 
 profileBtnEditAvatar.addEventListener("click", () => {
   popupAvatarEdit.open();
-  popupAvatarEdit._getInputValues();
 });
 
 profileBtnAddCards.addEventListener("click", () => {
   popupAddNewCard.open();
-  popupAddNewCard._getInputValues();
 });
 
-// profileButtonEdit.addEventListener("click", () => {
-//   popupEdit.open();
-//   popupEdit._getInputValues();
-// });
+profileButtonEdit.addEventListener("click", () => {
+  nameInput.value = userInfo.getUserInfo().name;
+  jobInput.value = userInfo.getUserInfo().myInfo;
+  popupEdit.open();
+});
 
 popupAvatarEdit.setEventListeners();
 popupAddNewCard.setEventListeners();
-// popupEdit.setEventListeners();
+popupEdit.setEventListeners();
 popupImage.setEventListeners();
 popupDisposeCard.setEventListeners();
 // ------------------------------------------------------------------------

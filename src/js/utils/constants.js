@@ -32,7 +32,7 @@ export const linkImg = ".profile__avatar-img";
 export const elementsCards = ".elements";
 export const popupShowImg = ".popup_show-img";
 
-export const nameInput = formProfile.querySelector("input[name = first-name]");
+export const nameInput = formProfile.querySelector("input[name = first_name]");
 export const jobInput = formProfile.querySelector("input[name = activity]");
 
 export const listSettings = {
