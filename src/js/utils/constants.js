@@ -19,8 +19,6 @@ export const profileBtnEditAvatar = document.querySelector(
   ".profile__btn-avatar"
 );
 
-// export const btnRemoveCard = popupRemoveCard.querySelector(".popup__btn-accept");
-
 export const formProfile = document.querySelector("form[name = profile_data]");
 export const formCard = document.querySelector("form[name = add_img_data]");
 export const formAvatar = document.querySelector(

@@ -229,12 +229,23 @@ const popupAvatarEdit = new PopupWithForm(popupEditAvatar);
 const popupEdit = new PopupWithForm(popupEditProfile);
 const popupImage = new PopupWithImage(popupShowImg);
 const popupAddNewCard = new PopupWithForm(popupAddCards);
-const popupDisposeCard = new PopupWithForm(popupRemoveCard);
+
+const popupDisposeCard = new PopupWithDeleteCard(
+  popupRemoveCard,
+  {
+    callbackDeleteCard: (ElementId, card) => {
+      api.cardDelete(ElementId)
+        .then((res) => {
+          card.deleteCard();
+          popupDisposeCard.close();
+        })
+        .catch((err) => api.isRejected(err));
+    }
+  });
 
 profileBtnEditAvatar.addEventListener("click", () => {
   popupAvatarEdit.open();
   popupAvatarEdit._getInputValues();
-  popupAvatarEdit.setEventListeners();
 });
 
 profileBtnAddCards.addEventListener("click", () => {
@@ -247,9 +258,10 @@ profileButtonEdit.addEventListener("click", () => {
   popupEdit._getInputValues();
 });
 
-popupImage.setEventListeners();
-popupEdit.setEventListeners();
+popupAvatarEdit.setEventListeners();
 popupAddNewCard.setEventListeners();
+popupEdit.setEventListeners();
+popupImage.setEventListeners();
 popupDisposeCard.setEventListeners();
 // ------------------------------------------------------------------------
 import FormValidator from "../js/components/FormValidator.js";
@@ -318,12 +330,7 @@ function initialCard(cardList) {
       popupImage.open(name, link);
     },
     deleteCardCallback: (ElementId) => {
-      api
-        .cardDelete(ElementId)
-        .then((res) => {
-          card.deleteCard();
-        })
-        .catch((err) => api.isRejected(err));
+      popupDisposeCard.open(ElementId, card);
     },
   });
 

@@ -72,7 +72,6 @@ export default class Card {
     this._cardImage.alt = this._name;
     this._cardImage.src = this._link;
     this._cardTitle.textContent = this._name;
-    this._element.dataset.cardId = this._id;
 
     this._isLiked();
     this._setEventListeners();
