@@ -225,51 +225,54 @@ import PopupWithForm from "../js/components/PopupWithForm.js";
 import PopupWithImage from "../js/components/PopupWithImage.js";
 import PopupWithDeleteCard from "../js/components/PopupWithDeleteCard.js";
 
-const popupEdit = new PopupWithForm(popupEditProfile);
+// const popupEdit = new PopupWithForm(popupEditProfile);
 const popupImage = new PopupWithImage(popupShowImg);
-const popupAddNewCard = new PopupWithForm(popupAddCards);
+// const popupAddNewCard = new PopupWithForm(popupAddCards);
 
-const popupAvatarEdit = new PopupWithForm(popupEditAvatar, () => {
-  const avatarInput = formAvatar.querySelector("input[name = url_avatar]");
-  api
-    .setProfileAvatar(avatarInput.value)
-    .then((profile) => {
-      userInfo.setAvatar(profile);
-      popupAvatarEdit.close();
-    })
-    .catch((err) => api.isRejected(err));
-});
+const popupAvatarEdit = new PopupWithForm(popupEditAvatar,
+  {
+    submitForm: ({ url_avatar }) => {
+      api
+        .setProfileAvatar(url_avatar)
+        .then((url) => {
+          userInfo.setAvatar(url);
+          popupAvatarEdit.close();
+        })
+        .catch((err) => api.isRejected(err));
+    }
+  });
 
-const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard, {
-  callbackDeleteCard: (ElementId, card) => {
-    api
-      .cardDelete(ElementId)
-      .then((res) => {
-        card.deleteCard();
-        popupDisposeCard.close();
-      })
-      .catch((err) => api.isRejected(err));
-  },
-});
+const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard,
+  {
+    callbackDeleteCard: (ElementId, card) => {
+      api
+        .cardDelete(ElementId)
+        .then((res) => {
+          card.deleteCard();
+          popupDisposeCard.close();
+        })
+        .catch((err) => api.isRejected(err));
+    },
+  });
 
 profileBtnEditAvatar.addEventListener("click", () => {
   popupAvatarEdit.open();
   popupAvatarEdit._getInputValues();
 });
 
-profileBtnAddCards.addEventListener("click", () => {
-  popupAddNewCard.open();
-  popupAddNewCard._getInputValues();
-});
+// profileBtnAddCards.addEventListener("click", () => {
+//   popupAddNewCard.open();
+//   popupAddNewCard._getInputValues();
+// });
 
-profileButtonEdit.addEventListener("click", () => {
-  popupEdit.open();
-  popupEdit._getInputValues();
-});
+// profileButtonEdit.addEventListener("click", () => {
+//   popupEdit.open();
+//   popupEdit._getInputValues();
+// });
 
 popupAvatarEdit.setEventListeners();
-popupAddNewCard.setEventListeners();
-popupEdit.setEventListeners();
+// popupAddNewCard.setEventListeners();
+// popupEdit.setEventListeners();
 popupImage.setEventListeners();
 popupDisposeCard.setEventListeners();
 // ------------------------------------------------------------------------
@@ -332,21 +335,24 @@ Promise.all([api.getInitialProfile(), api.getInitialCards()])
 
 // создаём карточку, добавляем логику в слушатели
 function initialCard(cardList) {
-  const card = new Card(userId, cardList, cardTemplate, {
-    likeCallback: (id, containsLike) => {
-      (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
-        .then((likeState) => {
-          card.changeLikeState(likeState);
-        })
-        .catch((err) => api.isRejected(err));
-    },
-    showImgCallback: (name, link) => {
-      popupImage.open(name, link);
-    },
-    deleteCardCallback: (ElementId) => {
-      popupDisposeCard.open(ElementId, card);
-    },
-  });
+  const card = new Card(userId, cardList, cardTemplate,
+    {
+      likeCallback: (id, containsLike) => {
+        (!containsLike
+          ? api.putLikeCard(id)
+          : api.removeLikeCard(id))
+          .then((likeState) => {
+            card.changeLikeState(likeState);
+          })
+          .catch((err) => api.isRejected(err));
+      },
+      showImgCallback: (name, link) => {
+        popupImage.open(name, link);
+      },
+      deleteCardCallback: (ElementId) => {
+        popupDisposeCard.open(ElementId, card);
+      },
+    });
 
   return card;
 }
