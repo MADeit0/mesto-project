@@ -204,7 +204,7 @@ import {
   // btnRemoveCard,
   // formProfile,
   // formCard,
-  // formAvatar,
+  formAvatar,
   cardTemplate,
   popupShowImg,
   popupRemoveCard,
@@ -225,10 +225,20 @@ import PopupWithForm from "../js/components/PopupWithForm.js";
 import PopupWithImage from "../js/components/PopupWithImage.js";
 import PopupWithDeleteCard from "../js/components/PopupWithDeleteCard.js";
 
-const popupAvatarEdit = new PopupWithForm(popupEditAvatar);
 const popupEdit = new PopupWithForm(popupEditProfile);
 const popupImage = new PopupWithImage(popupShowImg);
 const popupAddNewCard = new PopupWithForm(popupAddCards);
+
+const popupAvatarEdit = new PopupWithForm(popupEditAvatar, () => {
+  const avatarInput = formAvatar.querySelector("input[name = url_avatar]");
+  api
+    .setProfileAvatar(avatarInput.value)
+    .then((profile) => {
+      userInfo.setAvatar(profile);
+      popupAvatarEdit.close();
+    })
+    .catch((err) => api.isRejected(err));
+});
 
 const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard, {
   callbackDeleteCard: (ElementId, card) => {
