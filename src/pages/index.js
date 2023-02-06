@@ -230,18 +230,17 @@ const popupEdit = new PopupWithForm(popupEditProfile);
 const popupImage = new PopupWithImage(popupShowImg);
 const popupAddNewCard = new PopupWithForm(popupAddCards);
 
-const popupDisposeCard = new PopupWithDeleteCard(
-  popupRemoveCard,
-  {
-    callbackDeleteCard: (ElementId, card) => {
-      api.cardDelete(ElementId)
-        .then((res) => {
-          card.deleteCard();
-          popupDisposeCard.close();
-        })
-        .catch((err) => api.isRejected(err));
-    }
-  });
+const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard, {
+  callbackDeleteCard: (ElementId, card) => {
+    api
+      .cardDelete(ElementId)
+      .then((res) => {
+        card.deleteCard();
+        popupDisposeCard.close();
+      })
+      .catch((err) => api.isRejected(err));
+  },
+});
 
 profileBtnEditAvatar.addEventListener("click", () => {
   popupAvatarEdit.open();
@@ -267,7 +266,12 @@ popupDisposeCard.setEventListeners();
 import FormValidator from "../js/components/FormValidator.js";
 
 const validEditProfile = new FormValidator(listSettings, popupEditProfile);
+const validAddNewCard = new FormValidator(listSettings, popupAddCards);
+const validEditAvatar = new FormValidator(listSettings, popupEditAvatar);
+
 validEditProfile.enableValidation();
+validAddNewCard.enableValidation();
+validEditAvatar.enableValidation();
 
 // -------------------------------------------------------------------------
 
