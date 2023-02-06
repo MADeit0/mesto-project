@@ -227,43 +227,53 @@ import PopupWithDeleteCard from "../js/components/PopupWithDeleteCard.js";
 
 // const popupEdit = new PopupWithForm(popupEditProfile);
 const popupImage = new PopupWithImage(popupShowImg);
-// const popupAddNewCard = new PopupWithForm(popupAddCards);
 
-const popupAvatarEdit = new PopupWithForm(popupEditAvatar,
-  {
-    submitForm: ({ url_avatar }) => {
-      api
-        .setProfileAvatar(url_avatar)
-        .then((url) => {
-          userInfo.setAvatar(url);
-          popupAvatarEdit.close();
-        })
-        .catch((err) => api.isRejected(err));
-    }
-  });
+const popupAddNewCard = new PopupWithForm(popupAddCards, {
+  submitForm: ({ name_img, url_img }) => {
+    api
+      .setNewCard(name_img, url_img)
+      .then((card) => {
+        const cardElement = initialCard(card).createCard();
+        section.addItemPrepend(cardElement);
+        popupAddNewCard.close();
+      })
+      .catch((err) => api.isRejected(err));
+  },
+});
 
-const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard,
-  {
-    callbackDeleteCard: (ElementId, card) => {
-      api
-        .cardDelete(ElementId)
-        .then((res) => {
-          card.deleteCard();
-          popupDisposeCard.close();
-        })
-        .catch((err) => api.isRejected(err));
-    },
-  });
+const popupAvatarEdit = new PopupWithForm(popupEditAvatar, {
+  submitForm: ({ url_avatar }) => {
+    api
+      .setProfileAvatar(url_avatar)
+      .then((url) => {
+        userInfo.setAvatar(url);
+        popupAvatarEdit.close();
+      })
+      .catch((err) => api.isRejected(err));
+  },
+});
+
+const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard, {
+  callbackDeleteCard: (ElementId, card) => {
+    api
+      .cardDelete(ElementId)
+      .then((res) => {
+        card.deleteCard();
+        popupDisposeCard.close();
+      })
+      .catch((err) => api.isRejected(err));
+  },
+});
 
 profileBtnEditAvatar.addEventListener("click", () => {
   popupAvatarEdit.open();
   popupAvatarEdit._getInputValues();
 });
 
-// profileBtnAddCards.addEventListener("click", () => {
-//   popupAddNewCard.open();
-//   popupAddNewCard._getInputValues();
-// });
+profileBtnAddCards.addEventListener("click", () => {
+  popupAddNewCard.open();
+  popupAddNewCard._getInputValues();
+});
 
 // profileButtonEdit.addEventListener("click", () => {
 //   popupEdit.open();
@@ -271,7 +281,7 @@ profileBtnEditAvatar.addEventListener("click", () => {
 // });
 
 popupAvatarEdit.setEventListeners();
-// popupAddNewCard.setEventListeners();
+popupAddNewCard.setEventListeners();
 // popupEdit.setEventListeners();
 popupImage.setEventListeners();
 popupDisposeCard.setEventListeners();
@@ -310,6 +320,7 @@ import Card from "../js/components/Card.js";
 // --------------------------------------------------------------------------
 
 let userId = "";
+let section = "";
 
 // получение данных пользователя при загрузки страницы
 Promise.all([api.getInitialProfile(), api.getInitialCards()])
@@ -318,7 +329,7 @@ Promise.all([api.getInitialProfile(), api.getInitialCards()])
     userInfo.setUserInfo(user);
     userInfo.setAvatar(user);
 
-    const section = new Section(
+    section = new Section(
       {
         items: cards,
         renderer: (item) => {
@@ -335,24 +346,21 @@ Promise.all([api.getInitialProfile(), api.getInitialCards()])
 
 // создаём карточку, добавляем логику в слушатели
 function initialCard(cardList) {
-  const card = new Card(userId, cardList, cardTemplate,
-    {
-      likeCallback: (id, containsLike) => {
-        (!containsLike
-          ? api.putLikeCard(id)
-          : api.removeLikeCard(id))
-          .then((likeState) => {
-            card.changeLikeState(likeState);
-          })
-          .catch((err) => api.isRejected(err));
-      },
-      showImgCallback: (name, link) => {
-        popupImage.open(name, link);
-      },
-      deleteCardCallback: (ElementId) => {
-        popupDisposeCard.open(ElementId, card);
-      },
-    });
+  const card = new Card(userId, cardList, cardTemplate, {
+    likeCallback: (id, containsLike) => {
+      (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
+        .then((likeState) => {
+          card.changeLikeState(likeState);
+        })
+        .catch((err) => api.isRejected(err));
+    },
+    showImgCallback: (name, link) => {
+      popupImage.open(name, link);
+    },
+    deleteCardCallback: (ElementId) => {
+      popupDisposeCard.open(ElementId, card);
+    },
+  });
 
   return card;
 }
