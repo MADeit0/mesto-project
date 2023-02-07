@@ -1,11 +1,10 @@
-
-
 import {
+  cohortId,
+  token,
   popupEditProfile,
   profileButtonEdit,
   profileBtnAddCards,
   profileBtnEditAvatar,
-  formAvatar,
   cardTemplate,
   popupShowImg,
   popupRemoveCard,
@@ -15,18 +14,58 @@ import {
   linkImg,
   elementsCards,
   popupEditAvatar,
-  nameInput,
-  jobInput,
 } from "../js/utils/constants.js";
 
 import { listSettings } from "../js/utils/constants.js";
 
-// -----------------------------------------------------------------------
+import Api from "../js/components/Api.js";
+
+import FormValidator from "../js/components/FormValidator.js";
+
+import UserInfo from "../js/components/UserInfo.js";
+
+import Section from "../js/components/Section.js";
+
+import Card from "../js/components/Card.js";
+
 import PopupWithForm from "../js/components/PopupWithForm.js";
 import PopupWithImage from "../js/components/PopupWithImage.js";
 import PopupWithDeleteCard from "../js/components/PopupWithDeleteCard.js";
 
+let userId = "";
+let section = "";
+
+// -----------------------------------------------------------------------
+const api = new Api({
+  baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
+  headers: {
+    authorization: token,
+    "Content-Type": "application/json",
+  },
+});
+
+const validEditProfile = new FormValidator(listSettings, popupEditProfile);
+const validAddNewCard = new FormValidator(listSettings, popupAddCards);
+const validEditAvatar = new FormValidator(listSettings, popupEditAvatar);
+
+const userInfo = new UserInfo(profileName, profileActivity, linkImg);
+
 const popupImage = new PopupWithImage(popupShowImg);
+
+const popupAvatarEdit = new PopupWithForm(popupEditAvatar, {
+  submitForm: ({ url_avatar }) => {
+    api
+      .setProfileAvatar(url_avatar)
+      .then((url) => {
+        userInfo.setAvatar(url);
+        popupAvatarEdit.close();
+      })
+      .catch((err) => api.isRejected(err))
+      .finally(() => {
+        popupAvatarEdit.renderLoading(false);
+      });
+  },
+});
 
 const popupEdit = new PopupWithForm(popupEditProfile, {
   submitForm: ({ first_name, activity }) => {
@@ -37,8 +76,10 @@ const popupEdit = new PopupWithForm(popupEditProfile, {
         popupEdit.close();
       })
       .catch((err) => api.isRejected(err))
-      .finally(() => { popupEdit.renderLoading(false) });
-  }
+      .finally(() => {
+        popupEdit.renderLoading(false);
+      });
+  },
 });
 
 const popupAddNewCard = new PopupWithForm(popupAddCards, {
@@ -51,21 +92,10 @@ const popupAddNewCard = new PopupWithForm(popupAddCards, {
         popupAddNewCard.close();
       })
       .catch((err) => api.isRejected(err))
-      .finally(() => { popupAddNewCard.renderLoading(false) });
-  }
-});
-
-const popupAvatarEdit = new PopupWithForm(popupEditAvatar, {
-  submitForm: ({ url_avatar }) => {
-    api
-      .setProfileAvatar(url_avatar)
-      .then((url) => {
-        userInfo.setAvatar(url);
-        popupAvatarEdit.close();
-      })
-      .catch((err) => api.isRejected(err))
-      .finally(() => { popupAvatarEdit.renderLoading(false) });
-  }
+      .finally(() => {
+        popupAddNewCard.renderLoading(false);
+      });
+  },
 });
 
 const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard, {
@@ -77,7 +107,6 @@ const popupDisposeCard = new PopupWithDeleteCard(popupRemoveCard, {
         popupDisposeCard.close();
       })
       .catch((err) => api.isRejected(err));
-
   },
 });
 
@@ -86,59 +115,48 @@ profileBtnEditAvatar.addEventListener("click", () => {
   popupAvatarEdit.open();
 });
 
+profileButtonEdit.addEventListener("click", () => {
+  validEditProfile.resetFormInput();
+  popupEdit.setInputValues(userInfo.getUserInfo());
+  validEditProfile.toggleButtonState();
+  popupEdit.open();
+});
+
 profileBtnAddCards.addEventListener("click", () => {
   validAddNewCard.resetFormInput();
   popupAddNewCard.open();
 });
 
-profileButtonEdit.addEventListener("click", () => {
-  validEditProfile.resetFormInput();
-  popupEdit.setInputValues(userInfo.getUserInfo());
-  validEditProfile.toggleButtonState()
-  popupEdit.open();
-});
+// создаём карточку, добавляем логику в слушатели
+function initialCard(cardList) {
+  const card = new Card(userId, cardList, cardTemplate, {
+    likeCallback: (id, containsLike) => {
+      (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
+        .then((likeState) => {
+          card.changeLikeState(likeState);
+        })
+        .catch((err) => api.isRejected(err));
+    },
+    showImgCallback: (name, link) => {
+      popupImage.open(name, link);
+    },
+    deleteCardCallback: (ElementId) => {
+      popupDisposeCard.open(ElementId, card);
+    },
+  });
+
+  return card;
+}
+
+validEditProfile.enableValidation();
+validAddNewCard.enableValidation();
+validEditAvatar.enableValidation();
 
 popupAvatarEdit.setEventListeners();
 popupAddNewCard.setEventListeners();
 popupEdit.setEventListeners();
 popupImage.setEventListeners();
 popupDisposeCard.setEventListeners();
-// ------------------------------------------------------------------------
-import FormValidator from "../js/components/FormValidator.js";
-
-const validEditProfile = new FormValidator(listSettings, popupEditProfile);
-const validAddNewCard = new FormValidator(listSettings, popupAddCards);
-const validEditAvatar = new FormValidator(listSettings, popupEditAvatar);
-
-validEditProfile.enableValidation();
-validAddNewCard.enableValidation();
-validEditAvatar.enableValidation();
-
-// -------------------------------------------------------------------------
-
-import UserInfo from "../js/components/UserInfo.js";
-
-const userInfo = new UserInfo(profileName, profileActivity, linkImg);
-
-// -------------------------------------------------------------------------
-import Api from "../js/components/Api.js";
-import { cohortId, token } from "../js/utils/constants.js";
-
-const api = new Api({
-  baseUrl: `https://nomoreparties.co/v1/${cohortId}`,
-  headers: {
-    authorization: token,
-    "Content-Type": "application/json",
-  },
-});
-// -------------------------------------------------------------------------
-import Section from "../js/components/Section.js";
-import Card from "../js/components/Card.js";
-
-// --------------------------------------------------------------------------
-
-let userId = "";
-let section = "";
 
 // получение данных пользователя при загрузки страницы
 Promise.all([api.getInitialProfile(), api.getInitialCards()])
@@ -161,24 +179,3 @@ Promise.all([api.getInitialProfile(), api.getInitialCards()])
     section.renderItems();
   })
   .catch((err) => api.isRejected(err));
-
-// создаём карточку, добавляем логику в слушатели
-function initialCard(cardList) {
-  const card = new Card(userId, cardList, cardTemplate, {
-    likeCallback: (id, containsLike) => {
-      (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
-        .then((likeState) => {
-          card.changeLikeState(likeState);
-        })
-        .catch((err) => api.isRejected(err));
-    },
-    showImgCallback: (name, link) => {
-      popupImage.open(name, link);
-    },
-    deleteCardCallback: (ElementId) => {
-      popupDisposeCard.open(ElementId, card);
-    },
-  });
-
-  return card;
-}
