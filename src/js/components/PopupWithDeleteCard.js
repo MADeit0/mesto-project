@@ -19,4 +19,5 @@ export default class PopupWithDeleteCard extends Popup {
       this._callbackDeleteCard(this._ElementId, this._card);
     });
   }
+
 }

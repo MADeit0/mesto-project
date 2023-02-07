@@ -80,6 +80,7 @@ export default class Api {
       headers: this._headers,
     }).then((res) => this._isResponse(res));
   }
+
 }
 
 

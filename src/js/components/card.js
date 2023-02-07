@@ -3,8 +3,8 @@ export default class Card {
     myId,
     { _id, name, link, likes, owner },
     cardTemplate,
-    { likeCallback, showImgCallback, deleteCardCallback }
-  ) {
+    { likeCallback, showImgCallback, deleteCardCallback })
+    {
     this._myId = myId;
     this._id = _id;
     this._name = name;
