@@ -7,16 +7,16 @@ export default class PopupWithDeleteCard extends Popup {
     this._btnAccept = this._popup.querySelector(".popup__btn-accept");
   }
 
-  open(ElementId, card) {
+  open(elementId, card) {
     super.open();
-    this._ElementId = ElementId;
+    this._elementId = elementId;
     this._card = card;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._btnAccept.addEventListener("click", () => {
-      this._callbackDeleteCard(this._ElementId, this._card);
+      this._callbackDeleteCard(this._elementId, this._card);
     });
   }
 
