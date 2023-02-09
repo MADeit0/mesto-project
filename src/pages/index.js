@@ -34,8 +34,7 @@ import PopupWithForm from "../js/components/PopupWithForm.js";
 import PopupWithImage from "../js/components/PopupWithImage.js";
 import PopupWithDeleteCard from "../js/components/PopupWithDeleteCard.js";
 
-let userId = "";
-let section = "";
+// let userId = "";
 
 // -----------------------------------------------------------------------
 const api = new Api({
@@ -50,7 +49,7 @@ const validEditProfile = new FormValidator(listSettings, popupEditProfile);
 const validAddNewCard = new FormValidator(listSettings, popupAddCards);
 const validEditAvatar = new FormValidator(listSettings, popupEditAvatar);
 
-section = new Section(
+const section = new Section(
   {
     renderer: (item) => {
       const cardElement = initialCard(item).createCard();
@@ -68,7 +67,9 @@ const popupAvatarEdit = new PopupWithForm(popupEditAvatar, {
   submitForm: ({ url_avatar }) => {
     return api
       .setProfileAvatar(url_avatar)
-      .then((url) => { userInfo.setAvatar(url); })
+      .then((url) => {
+        userInfo.setUserInfo(url);
+      })
       .catch((err) => api.isRejected(err));
   },
 });
@@ -77,8 +78,10 @@ const popupEdit = new PopupWithForm(popupEditProfile, {
   submitForm: ({ first_name, activity }) => {
     return api
       .setProfileData(first_name, activity)
-      .then((profile) => { userInfo.setUserInfo(profile); })
-      .catch((err) => api.isRejected(err))
+      .then((profile) => {
+        userInfo.setUserInfo(profile);
+      })
+      .catch((err) => api.isRejected(err));
   },
 });
 
@@ -90,7 +93,7 @@ const popupAddNewCard = new PopupWithForm(popupAddCards, {
         const cardElement = initialCard(card).createCard();
         section.addItemPrepend(cardElement);
       })
-      .catch((err) => api.isRejected(err))
+      .catch((err) => api.isRejected(err));
   },
 });
 
@@ -125,7 +128,7 @@ profileBtnAddCards.addEventListener("click", () => {
 
 // создаём карточку, добавляем логику в слушатели
 function initialCard(cardList) {
-  const card = new Card(userId, cardList, cardTemplate, {
+  const card = new Card(userInfo.setUserId(), cardList, cardTemplate, {
     likeCallback: (id, containsLike) => {
       (!containsLike ? api.putLikeCard(id) : api.removeLikeCard(id))
         .then((likeState) => {
@@ -157,9 +160,7 @@ popupDisposeCard.setEventListeners();
 // получение данных пользователя при загрузки страницы
 Promise.all([api.getInitialProfile(), api.getInitialCards()])
   .then(([user, cards]) => {
-    userId = user._id;
     userInfo.setUserInfo(user);
-    userInfo.setAvatar(user);
     section.renderItems(cards);
   })
   .catch((err) => api.isRejected(err));
