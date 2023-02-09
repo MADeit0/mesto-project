@@ -50,53 +50,47 @@ const validEditProfile = new FormValidator(listSettings, popupEditProfile);
 const validAddNewCard = new FormValidator(listSettings, popupAddCards);
 const validEditAvatar = new FormValidator(listSettings, popupEditAvatar);
 
+section = new Section(
+  {
+    renderer: (item) => {
+      const cardElement = initialCard(item).createCard();
+      section.addItemAppend(cardElement);
+    },
+  },
+  elementsCards
+);
+
 const userInfo = new UserInfo(profileName, profileActivity, linkImg);
 
 const popupImage = new PopupWithImage(popupShowImg);
 
 const popupAvatarEdit = new PopupWithForm(popupEditAvatar, {
   submitForm: ({ url_avatar }) => {
-    api
+    return api
       .setProfileAvatar(url_avatar)
-      .then((url) => {
-        userInfo.setAvatar(url);
-        popupAvatarEdit.close();
-      })
-      .catch((err) => api.isRejected(err))
-      .finally(() => {
-        popupAvatarEdit.renderLoading(false);
-      });
+      .then((url) => { userInfo.setAvatar(url); })
+      .catch((err) => api.isRejected(err));
   },
 });
 
 const popupEdit = new PopupWithForm(popupEditProfile, {
   submitForm: ({ first_name, activity }) => {
-    api
+    return api
       .setProfileData(first_name, activity)
-      .then((profile) => {
-        userInfo.setUserInfo(profile);
-        popupEdit.close();
-      })
+      .then((profile) => { userInfo.setUserInfo(profile); })
       .catch((err) => api.isRejected(err))
-      .finally(() => {
-        popupEdit.renderLoading(false);
-      });
   },
 });
 
 const popupAddNewCard = new PopupWithForm(popupAddCards, {
   submitForm: ({ name_img, url_img }) => {
-    api
+    return api
       .setNewCard(name_img, url_img)
       .then((card) => {
         const cardElement = initialCard(card).createCard();
         section.addItemPrepend(cardElement);
-        popupAddNewCard.close();
       })
       .catch((err) => api.isRejected(err))
-      .finally(() => {
-        popupAddNewCard.renderLoading(false);
-      });
   },
 });
 
@@ -166,18 +160,6 @@ Promise.all([api.getInitialProfile(), api.getInitialCards()])
     userId = user._id;
     userInfo.setUserInfo(user);
     userInfo.setAvatar(user);
-
-    section = new Section(
-      {
-        items: cards,
-        renderer: (item) => {
-          const cardElement = initialCard(item).createCard();
-          section.addItemAppend(cardElement);
-        },
-      },
-      elementsCards
-    );
-
-    section.renderItems();
+    section.renderItems(cards);
   })
   .catch((err) => api.isRejected(err));
