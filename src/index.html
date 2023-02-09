@@ -2,23 +2,23 @@
 <html lang="ru">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="./images/favicon/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./images/favicon/favicon.ico" type="image/x-icon" />
   <title>Место</title>
 </head>
 
 <body class="root">
   <div class="page">
     <header class="header">
-      <img class="header__logo" src="./images/logo/logo.svg" alt="MESTO Россия">
+      <img class="header__logo" src="./images/logo/logo.svg" alt="MESTO Россия" />
     </header>
     <main class="content">
       <section class="profile" aria-label="Профиль пользователя">
         <div class="profile__avatar">
           <button class="profile__btn-avatar" type="button" title="Изменить картинку профиля"
-          aria-label="Изменить картинку профиля"></button>
-          <img class="profile__avatar-img" src="./images/avatar/avatar.jpg" alt="Картинка профиля">
+            aria-label="Изменить картинку профиля"></button>
+          <img class="profile__avatar-img" src="./images/avatar/avatar.jpg" alt="Картинка профиля" />
         </div>
         <div class="profile__text-info">
           <h1 class="profile__name"></h1>
@@ -29,8 +29,7 @@
         <button class="profile__btn-add-cards" type="button" title="Добавить карточку"
           aria-label="Добавить карточку"></button>
       </section>
-      <section class="elements" aria-label="Галерея карточек с изображением">
-      </section>
+      <section class="elements" aria-label="Галерея карточек с изображением"></section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022. Цыпуштанов Олег</p>
@@ -39,19 +38,23 @@
     <div class="popup popup_edit-profile">
       <div class="popup__container">
         <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
-        <h3 class="popup__title popup__title_indent_m">Редактировать профиль</h3>
+        <h3 class="popup__title popup__title_indent_m">
+          Редактировать профиль
+        </h3>
         <form class="popup__form" action="#" method="post" name="profile_data">
           <fieldset class="popup__fieldset">
-            <input id="name" class="popup__input" type="text" name="first-name" placeholder="Имя"
-              title="Имя" minlength="2" maxlength="40" pattern="^[A-Za-zА-Яа-яёЁ\-\s]+$" required
-              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+            <input id="name" class="popup__input" type="text" name="first_name" placeholder="Имя" title="Имя"
+              minlength="2" maxlength="40" pattern="^[A-Za-zА-Яа-яёЁ\-\s]+$" required
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
             <p class="popup__input-error name-error"></p>
             <input id="activity" class="popup__input" type="text" name="activity" placeholder="Род деятельности"
               title="Род деятельности" minlength="2" maxlength="200" pattern="^[A-Za-zА-Яа-яёЁ\-\s]+$" required
-              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
             <p class="popup__input-error activity-error"></p>
-            <button class="popup__btn-accept" type="submit"
-            title="Сохранить изменения" aria-label="Сохранить изменения" data-loaded="Сохранение..." data-initial="Сохранить">Сохранить</button>
+            <button class="popup__btn-accept" type="submit" title="Сохранить изменения" aria-label="Сохранить изменения"
+              data-loaded="Сохранение..." data-initial="Сохранить">
+              Сохранить
+            </button>
           </fieldset>
         </form>
       </div>
@@ -64,13 +67,15 @@
           <fieldset class="popup__fieldset">
             <input id="card-name" class="popup__input" type="text" name="name_img" placeholder="Название"
               title="Название картинки" minlength="2" maxlength="30" pattern="^[A-Za-zА-Яа-яёЁ\-\s]+$" required
-              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" />
             <p class="popup__input-error card-name-error"></p>
-            <input id="card-url" class="popup__input" type="url" name="url_img"
-              placeholder="Ссылка на картинку" title="Ссылка на картинку" required>
+            <input id="card-url" class="popup__input" type="url" name="url_img" placeholder="Ссылка на картинку"
+              title="Ссылка на картинку" required />
             <p class="popup__input-error card-url-error"></p>
-            <button class="popup__btn-accept" type="submit"
-            title="Создать карточку" aria-label="Создать карточку" data-loaded="Создание..." data-initial="Создать">Создать</button>
+            <button class="popup__btn-accept" type="submit" title="Создать карточку" aria-label="Создать карточку"
+              data-loaded="Создание..." data-initial="Создать">
+              Создать
+            </button>
           </fieldset>
         </form>
       </div>
@@ -81,18 +86,20 @@
         <h3 class="popup__title popup__title_indent_m">Обновить аватар</h3>
         <form class="popup__form" action="#" method="post" name="add_avatar_data">
           <fieldset class="popup__fieldset">
-            <input id="avatar-url" class="popup__input" type="url" name="url_avatar"
-              placeholder="Ссылка на картинку" title="Ссылка на картинку" required>
+            <input id="avatar-url" class="popup__input" type="url" name="url_avatar" placeholder="Ссылка на картинку"
+              title="Ссылка на картинку" required />
             <p class="popup__input-error avatar-url-error"></p>
-            <button class="popup__btn-accept" type="submit"
-            title="Сохранить карточку" aria-label="Сохранить карточку" data-loaded="Сохранение..." data-initial="Сохранить">Сохранить</button>
+            <button class="popup__btn-accept" type="submit" title="Сохранить карточку" aria-label="Сохранить карточку"
+              data-loaded="Сохранение..." data-initial="Сохранить">
+              Сохранить
+            </button>
           </fieldset>
         </form>
       </div>
     </div>
     <div class="popup popup_show-img">
       <div class="popup__cover">
-        <img class="popup__image" src="#" alt="">
+        <img class="popup__image" src="#" alt="" />
         <p class="popup__text"></p>
         <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
       </div>
@@ -101,7 +108,9 @@
       <div class="popup__container">
         <button class="popup__btn-leave" type="button" title="Закрыть окно" aria-label="Закрыть окно"></button>
         <h3 class="popup__title popup__title_indent_s">Вы уверены?</h3>
-        <button class="popup__btn-accept" type="submit" title="Удалить" aria-label="Удалить">да</button>
+        <button class="popup__btn-accept" type="submit" title="Удалить" aria-label="Удалить">
+          да
+        </button>
       </div>
     </div>
   </div>
@@ -109,7 +118,7 @@
   <template id="tmp-card">
     <article class="element">
       <button class="element__btn-remove" type="button" title="Удалить" aria-label="Удалить"></button>
-      <img class="element__image" src="./images/card/card.png" alt="." title="Увеличить изображение">
+      <img class="element__image" src="./images/card/card.png" alt="." title="Увеличить изображение" />
       <div class="element__caption">
         <h2 class="element__title"></h2>
         <div class="element__like">
